@@ -80,9 +80,8 @@ namespace WpfApp1
         private void richtextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
             string text = new TextRange(richText1.Document.ContentStart, richText1.Document.ContentEnd).Text;
-            string3 = "" + text.Length.ToString();
+            string3 = "Число символов: " + (text.Length - 2).ToString();
             label1.Content = string3;
         }
-
     }
 }
