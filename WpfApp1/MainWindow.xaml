@@ -32,7 +32,15 @@
                 <MenuItem Name="Cancel" Header="Отмена" Click="cancel_action"></MenuItem>
             </MenuItem>
         </Menu>
-        <Button Name="button3" ToolTip="это кнопка" Grid.Column="2" Grid.Row="2" Content="Кнопка 1" Width="100" Height="40" MinWidth="80" MinHeight="30" MaxWidth="200" MaxHeight="300" Click="button3_Click" Margin="0,5,5,5"/>
+        <Button Name="button3"
+                Content="Кнопка 1" 
+                ToolTip="это кнопка" 
+                Grid.Column="2" Grid.Row="2"
+                Margin="0,5,5,5"
+                Width="100" Height="40" 
+                MinWidth="80" MinHeight="30" 
+                MaxWidth="200" MaxHeight="300" 
+                Click="button3_Click" />
         <TreeView Grid.Row="1" Grid.Column="0" Width="150" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="5,5,5,5">
             <TreeViewItem Header="Корень">
                 <TreeViewItem Header="Elem1">
@@ -50,7 +58,7 @@
         <!-->   РИЧТЕКСТ   <!-->
         <Label Name="label1" Content="Label" HorizontalAlignment="Left" Margin="10,12,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <RichTextBox TextChanged="richtextBox1_TextChanged"  Name="richText1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" Grid.Row="1" Grid.ColumnSpan="2">
-           <FlowDocument/>
+            <FlowDocument/>
         </RichTextBox>
     </Grid>
 </Window>
