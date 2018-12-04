@@ -71,7 +71,7 @@
         <DataGrid Name="dtGrid" ItemsSource="{Binding}"
                      Grid.Column="1" Grid.Row="1"
                      Grid.ColumnSpan="2"
-                     HorizontalAlignment="Stretch" 
-                     Margin="10"/>
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                     Margin="5,5,5,5"/>
     </Grid>
 </Window>
