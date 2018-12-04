@@ -55,7 +55,7 @@ namespace WpfApp1
 
         private void cancel_action(object sender, RoutedEventArgs e)
         {
-            richText1.Document.Blocks.Clear();
+            //richText1.Document.Blocks.Clear();
             button3.Content = "Button 1";
         }
 
@@ -76,26 +76,26 @@ namespace WpfApp1
 
         private void bla1_action(object sender, MouseButtonEventArgs e)
         {
-            richText1.Document.Blocks.Clear();
-            richText1.Document.Blocks.Add(new Paragraph(new Run("blabla111")));
+            //richText1.Document.Blocks.Clear();
+            //richText1.Document.Blocks.Add(new Paragraph(new Run("blabla111")));
         }
         
         private void bla2_selected_action(object sender, RoutedEventArgs e)
         {
-            richText1.Document.Blocks.Clear();
-            richText1.Document.Blocks.Add(new Paragraph(new Run("bla2 selected")));
+            //richText1.Document.Blocks.Clear();
+            //richText1.Document.Blocks.Add(new Paragraph(new Run("bla2 selected")));
         }
         private void bla3_selected_action(object sender, RoutedEventArgs e)
         {
-            richText1.Document.Blocks.Clear();
-            richText1.Document.Blocks.Add(new Paragraph(new Run("bla3 selected")));
+            //richText1.Document.Blocks.Clear();
+            //richText1.Document.Blocks.Add(new Paragraph(new Run("bla3 selected")));
         }
 
-        private void richtextBox1_TextChanged(object sender, TextChangedEventArgs e)
+        /*private void richtextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
             string text = new TextRange(richText1.Document.ContentStart, richText1.Document.ContentEnd).Text;
             string3 = "Число символов: " + (text.Length - 2).ToString();
             label1.Content = string3;
-        }
+        }*/
     }
 }

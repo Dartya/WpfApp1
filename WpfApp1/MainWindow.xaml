@@ -62,18 +62,16 @@
         <Label Name="label1" Content="Label" 
                HorizontalAlignment="Left" Margin="10,12,0,0" 
                Grid.Row="2" VerticalAlignment="Top"/>
-        <RichTextBox TextChanged="richtextBox1_TextChanged"  Name="richText1" 
+        <!--  <RichTextBox TextChanged="richtextBox1_TextChanged"  Name="richText1" 
                      Grid.Column="1" Grid.Row="1"
                      Grid.ColumnSpan="2"
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                      Margin="5,5,5,5">
-            <FlowDocument>
-                <Paragraph>
-                    <InlineUIContainer>
-                        <DataGrid Name="dtGrid" Height="124" Width="216" ItemsSource="{Binding}"/>
-                    </InlineUIContainer>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        </RichTextBox>  -->
+        <DataGrid Name="dtGrid" ItemsSource="{Binding}"
+                     Grid.Column="1" Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     HorizontalAlignment="Stretch" 
+                     Margin="10"/>
     </Grid>
 </Window>
