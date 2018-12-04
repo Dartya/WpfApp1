@@ -67,7 +67,13 @@
                      Grid.ColumnSpan="2"
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                      Margin="5,5,5,5">
-            <FlowDocument/>
+            <FlowDocument>
+                <Paragraph>
+                    <InlineUIContainer>
+                        <DataGrid Name="dtGrid" Height="124" Width="216" ItemsSource="{Binding}"/>
+                    </InlineUIContainer>
+                </Paragraph>
+            </FlowDocument>
         </RichTextBox>
     </Grid>
 </Window>

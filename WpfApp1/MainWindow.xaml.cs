@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace WpfApp1
 {
@@ -26,6 +28,18 @@ namespace WpfApp1
         {
             InitializeComponent();
             label1.Content = "blablabla";
+
+            string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM phones", connection);
+            connection.Open();
+            DataTable dt = new DataTable();
+            dt.Load(cmd.ExecuteReader());
+            connection.Close();
+
+            dtGrid.DataContext = dt;
         }
 
         private void button3_Click(object sender, RoutedEventArgs e)
