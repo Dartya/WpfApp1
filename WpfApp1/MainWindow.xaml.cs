@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using System.Data;
+using WpfApp1.Classes;
 
 namespace WpfApp1
 {
@@ -28,25 +29,18 @@ namespace WpfApp1
         {
             InitializeComponent();
             label1.Content = "blablabla";
+            DBconnection dBconnection = new DBconnection("localhost", "mobiledb", "root", "123456");
+            //string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
 
-            string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
+            MySqlConnection connection = new MySqlConnection(dBconnection.connectionString);
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
-
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM phones", connection);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM products", connection);
             connection.Open();
             DataTable dt = new DataTable();
             dt.Load(cmd.ExecuteReader());
             connection.Close();
 
             dtGrid.DataContext = dt;
-        }
-
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
-            string3 = "Число символов: ";
-            label1.Content = string3;
-            //label1.Content = string3;
         }
 
         private void newFile_action(object sender, RoutedEventArgs e) {
@@ -73,24 +67,53 @@ namespace WpfApp1
         {
             button3.Content = "откупориваю";
         }
-
-        private void bla1_action(object sender, MouseButtonEventArgs e)
+        
+        private void DBSettings_Click(object sender, RoutedEventArgs e)
         {
-            //richText1.Document.Blocks.Clear();
-            //richText1.Document.Blocks.Add(new Paragraph(new Run("blabla111")));
+            DBConnectionSettings dBConnectionSettings = new DBConnectionSettings();
+            dBConnectionSettings.Owner = this;
+            dBConnectionSettings.Show();
+        }
+
+        private void RiskSettings_Click(object sender, RoutedEventArgs e)
+        {
+            RiskProfile riskProfile = new RiskProfile();
+            riskProfile.Owner = this;
+            riskProfile.Show();
+        }
+
+        private void PositionCalculator_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Manual_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, RoutedEventArgs e)
+        {
+            string3 = "Число символов: ";
+            label1.Content = string3;
+            //label1.Content = string3;
         }
         
-        private void bla2_selected_action(object sender, RoutedEventArgs e)
-        {
-            //richText1.Document.Blocks.Clear();
-            //richText1.Document.Blocks.Add(new Paragraph(new Run("bla2 selected")));
-        }
-        private void bla3_selected_action(object sender, RoutedEventArgs e)
-        {
-            //richText1.Document.Blocks.Clear();
-            //richText1.Document.Blocks.Add(new Paragraph(new Run("bla3 selected")));
-        }
-
         /*private void richtextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
             string text = new TextRange(richText1.Document.ContentStart, richText1.Document.ContentEnd).Text;

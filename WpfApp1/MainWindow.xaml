@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Grid" Height="250" Width="350"
+        Title="Журнал торговых операций" Height="250" Width="350"
         MinHeight="350 px"
         MinWidth="450 px"
         >
@@ -23,6 +23,7 @@
         <Menu Name="menuTop" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
                 <MenuItem Header="Новый" Name="New" Click="newFile_action"></MenuItem>
+                <Separator />
                 <MenuItem Header="Открыть" Name="Open">
                     <MenuItem Header="Хрень" Name="Hren" Click="hren_action"></MenuItem>
                     <MenuItem Header="Брень" Name="Bren" Click="bren_action"></MenuItem>
@@ -31,47 +32,61 @@
             <MenuItem Header="Правка">
                 <MenuItem Name="Cancel" Header="Отмена" Click="cancel_action"></MenuItem>
             </MenuItem>
+            <MenuItem Header="Утилиты">
+                <MenuItem Name="PositionCalculator" Header="Калькулятор позиции" Click="PositionCalculator_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Настройки">
+                <MenuItem Name="RiskSettings" Header="Риск-профиль" Click="RiskSettings_Click"></MenuItem>
+                <MenuItem Name="DBSettings" Header="Настройки БД" Click="DBSettings_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <MenuItem Name="Manual" Header="Справка" Click="Manual_Click"></MenuItem>
+                <MenuItem Name="About" Header="О программе" Click="About_Click"></MenuItem>
+            </MenuItem>
         </Menu>
-        <Button Name="button3"
+        <Button Name="button1"
                 Content="Кнопка 1" 
-                ToolTip="это кнопка" 
+                ToolTip="это кнопка 1" 
                 Grid.Column="2" Grid.Row="2"
-                Margin="0,5,5,5"
+                Margin="5,5,5,5"
                 Width="100" Height="40" 
                 MinWidth="80" MinHeight="30" 
                 MaxWidth="200" MaxHeight="300" 
-                Click="button3_Click" />
-        <TreeView Grid.Row="1" Grid.Column="0" 
-                Width="150" 
-                HorizontalAlignment="Left" VerticalAlignment="Stretch" 
-                Margin="5,5,5,5">
-            <TreeViewItem Header="Корень">
-                <TreeViewItem Header="Elem1">
-                    <TreeViewItem Header="blabla1" ToolTip="это элем.1"></TreeViewItem>
-                    <TreeViewItem Header="blabla2" ></TreeViewItem>
-                    <TreeViewItem Header="blabla3"></TreeViewItem>
-                </TreeViewItem>
-                <TreeViewItem Header="Elem2">
-                    <TreeViewItem Header="bla1" MouseDoubleClick="bla1_action"></TreeViewItem>
-                    <TreeViewItem Header="bla2" Selected="bla2_selected_action"></TreeViewItem>
-                    <TreeViewItem Header="bla3" Selected="bla3_selected_action"></TreeViewItem>
-                </TreeViewItem>
-            </TreeViewItem>
-        </TreeView>
-        <!-->   РИЧТЕКСТ   <!-->
+                Click="button1_Click" 
+                HorizontalAlignment="Left"/>
+        
+        <Button Name="button2"
+                Content="Кнопка 2" 
+                ToolTip="это кнопка 2" 
+                Grid.Column="2" Grid.Row="2"
+                Margin="5,5,5,5"
+                Width="100" Height="40" 
+                MinWidth="80" MinHeight="30" 
+                MaxWidth="200" MaxHeight="300" 
+                Click="button2_Click" 
+                HorizontalAlignment="Center"/>
+        
+        <Button Name="button3"
+                Content="Кнопка 3" 
+                ToolTip="это кнопка 3" 
+                Grid.Column="2" Grid.Row="2"
+                Margin="5,5,5,5"
+                Width="100" Height="40" 
+                MinWidth="80" MinHeight="30" 
+                MaxWidth="200" MaxHeight="300" 
+                Click="button3_Click"
+                HorizontalAlignment="Right"/>
+        
         <Label Name="label1" Content="Label" 
                HorizontalAlignment="Left" Margin="10,12,0,0" 
                Grid.Row="2" VerticalAlignment="Top"/>
-        <!--  <RichTextBox TextChanged="richtextBox1_TextChanged"  Name="richText1" 
-                     Grid.Column="1" Grid.Row="1"
-                     Grid.ColumnSpan="2"
-                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                     Margin="5,5,5,5">
-        </RichTextBox>  -->
+        
         <DataGrid Name="dtGrid" ItemsSource="{Binding}"
-                     Grid.Column="1" Grid.Row="1"
-                     Grid.ColumnSpan="2"
-                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                     Margin="5,5,5,5"/>
+                  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Margin="5,5,5,5"
+                  RowBackground="AntiqueWhite"
+                  AlternatingRowBackground="AliceBlue"
+                  />
     </Grid>
 </Window>

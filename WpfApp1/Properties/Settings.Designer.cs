@@ -32,5 +32,16 @@ namespace WpfApp1.Properties {
                 return ((string)(this["DefaultConnection"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;database=mobiledb;persistsecurityinfo=True;port=330" +
+            "6")]
+        public string mobiledbConnectionString {
+            get {
+                return ((string)(this["mobiledbConnectionString"]));
+            }
+        }
     }
 }
