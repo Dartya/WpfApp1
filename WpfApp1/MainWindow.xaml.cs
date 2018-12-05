@@ -24,12 +24,13 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         string string3;
+        DBconnection dBconnection = new DBconnection("localhost", "mobiledb", "root", "123456");
 
         public MainWindow()
         {
             InitializeComponent();
             label1.Content = "blablabla";
-            DBconnection dBconnection = new DBconnection("localhost", "mobiledb", "root", "123456");
+            
             //string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
 
             MySqlConnection connection = new MySqlConnection(dBconnection.connectionString);
@@ -72,14 +73,17 @@ namespace WpfApp1
         {
             DBConnectionSettings dBConnectionSettings = new DBConnectionSettings();
             dBConnectionSettings.Owner = this;
-            dBConnectionSettings.Show();
+            //dBConnectionSettings.ShowDialog();
+            if (dBConnectionSettings.ShowDialog() == true) {
+                MessageBox.Show("Настройки приняты");
+            } else MessageBox.Show("Окно закрыто");
         }
 
         private void RiskSettings_Click(object sender, RoutedEventArgs e)
         {
             RiskProfile riskProfile = new RiskProfile();
             riskProfile.Owner = this;
-            riskProfile.Show();
+            riskProfile.ShowDialog();   //модальное окно
         }
 
         private void PositionCalculator_Click(object sender, RoutedEventArgs e)
@@ -109,16 +113,6 @@ namespace WpfApp1
 
         private void button3_Click(object sender, RoutedEventArgs e)
         {
-            string3 = "Число символов: ";
-            label1.Content = string3;
-            //label1.Content = string3;
         }
-        
-        /*private void richtextBox1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string text = new TextRange(richText1.Document.ContentStart, richText1.Document.ContentEnd).Text;
-            string3 = "Число символов: " + (text.Length - 2).ToString();
-            label1.Content = string3;
-        }*/
     }
 }

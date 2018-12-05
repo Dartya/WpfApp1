@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp1.Classes;
 
 namespace WpfApp1
 {
@@ -24,14 +25,16 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void enter_button(object sender, RoutedEventArgs e)
+        public void enter_button(object sender, RoutedEventArgs e)
         {
+            DBconnection dBCon = new DBconnection(Server.Text.ToString(), DB.Text.ToString(), UID.Text.ToString(), pass.Text.ToString());
             this.DialogResult = true;
         }
 
         private void cancel_button(object sender, RoutedEventArgs e)
         {
-
+            
         }
+
     }
 }

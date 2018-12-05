@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Classes
 {
-    class DBconnection
+    public class DBconnection
     {
         public string server { get; set; }
         public string DB { get; set; }
