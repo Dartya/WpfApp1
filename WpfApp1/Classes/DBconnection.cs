@@ -16,7 +16,7 @@ namespace WpfApp1.Classes
 
         public DBconnection() {    //стандартный конструктор соединения
             server = "localhost";
-            DB = "mobiledb";
+            DB = "blabla";
             UID = "root";
             pass = "123456";
             connectionString = makeConnectionString(server, DB, UID, pass);
@@ -27,12 +27,35 @@ namespace WpfApp1.Classes
             connectionString = makeConnectionString(server, DB, UID, pass);
         }
 
-        string makeConnectionString(string server, string DB, string UID, string pass) {
+        public string makeConnectionString(string server, string DB, string UID, string pass) {
             string connectionString = "SERVER=" + server + ";" +
                 "DATABASE=" + DB + ";" +
                 "UID=" + UID + ";" +
                 "PASSWORD=" + pass + ";";
             return connectionString;
+        }
+
+        public string makeConnectionString()
+        {
+            string connectionString = "SERVER=" + server + ";" +
+                "DATABASE=" + DB + ";" +
+                "UID=" + UID + ";" +
+                "PASSWORD=" + pass + ";";
+            return connectionString;
+        }
+
+        public void setParams(string server, string DB, string UID, string pass) {
+            this.server = server;
+            this.DB = DB;
+            this.UID = UID;
+            this.pass = pass;
+        }
+
+        public void setParams(DBconnection connection) {
+            server = connection.server;
+            DB = connection.DB;
+            UID = connection.UID;
+            pass = connection.pass;
         }
     }
 }

@@ -23,62 +23,24 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        string string3;
-        DBconnection dBconnection = new DBconnection("localhost", "mobiledb", "root", "123456");
+        DBconnection dBconnection = new DBconnection("localhost", "blabla", "root", "123456");
 
         public MainWindow()
         {
             InitializeComponent();
-            label1.Content = "blablabla";
-            
-            //string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
-
-            MySqlConnection connection = new MySqlConnection(dBconnection.connectionString);
-
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM products", connection);
-            connection.Open();
-            DataTable dt = new DataTable();
-            dt.Load(cmd.ExecuteReader());
-            connection.Close();
-
-            dtGrid.DataContext = dt;
         }
-
-        private void newFile_action(object sender, RoutedEventArgs e) {
-            button3.Content = "blabla1";
-        }
-
-        private void cancel_action(object sender, RoutedEventArgs e)
-        {
-            //richText1.Document.Blocks.Clear();
-            button3.Content = "Button 1";
-        }
-
-        private void hren_action(object sender, RoutedEventArgs e)
-        {
-            button3.Content = "хрень";
-        }
-
-        private void bren_action(object sender, RoutedEventArgs e)
-        {
-            button3.Content = "брень";
-        }
-
-        private void openFile_action(object sender, RoutedEventArgs e)
-        {
-            button3.Content = "откупориваю";
-        }
-        
+        //окно настроек соединения с БД  
         private void DBSettings_Click(object sender, RoutedEventArgs e)
         {
             DBConnectionSettings dBConnectionSettings = new DBConnectionSettings();
             dBConnectionSettings.Owner = this;
             //dBConnectionSettings.ShowDialog();
             if (dBConnectionSettings.ShowDialog() == true) {
-                MessageBox.Show("Настройки приняты");
-            } else MessageBox.Show("Окно закрыто");
+                dBconnection.setParams(dBConnectionSettings.dBCon);
+                MessageBox.Show(dBconnection.makeConnectionString());
+            }
         }
-
+        //окно настроек риск-профиля
         private void RiskSettings_Click(object sender, RoutedEventArgs e)
         {
             RiskProfile riskProfile = new RiskProfile();
@@ -101,18 +63,70 @@ namespace WpfApp1
 
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void RefreshMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            //string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
+            try
+            {
+                MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
+
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM phones", connection);
+                connection.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                connection.Close();
+
+                dtGrid.DataContext = dt;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+        }
+
+        private void AddMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void button2_Click(object sender, RoutedEventArgs e)
+        private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void button3_Click(object sender, RoutedEventArgs e)
+        private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+        
+        private void JSON_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void XML_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LoadProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Excel_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

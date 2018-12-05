@@ -20,21 +20,27 @@ namespace WpfApp1
     /// </summary>
     public partial class DBConnectionSettings : Window
     {
+        public DBconnection dBCon = new DBconnection();
+
         public DBConnectionSettings()
         {
             InitializeComponent();
+
         }
 
         public void enter_button(object sender, RoutedEventArgs e)
         {
-            DBconnection dBCon = new DBconnection(Server.Text.ToString(), DB.Text.ToString(), UID.Text.ToString(), pass.Text.ToString());
+            dBCon.setParams(Server.Text.ToString(), DB.Text.ToString(), UID.Text.ToString(), pass.Text.ToString());
             this.DialogResult = true;
         }
 
         private void cancel_button(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
+        public DBconnection DBconnect{
+            get { return dBCon; }
+        }
     }
 }

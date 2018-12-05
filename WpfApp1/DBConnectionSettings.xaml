@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="Настройки подключения к БД" Height="250" Width="200"
         MinHeight="260 px"
-        MinWidth="300 px" >
+        MinWidth="300 px" 
+        WindowStartupLocation="CenterScreen">
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" ></RowDefinition>
@@ -67,7 +68,7 @@
                 Width="120"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"/>
-        <TextBox Text="mobiledb"
+        <TextBox Text="blabla"
                 Name="DB"
                 Grid.Row="1" Grid.Column="1" 
                 TextWrapping="Wrap"
