@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Classes
 {
-
     class Trade
     {
         public string InstrumentName { get; set; }

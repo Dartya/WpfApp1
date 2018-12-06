@@ -23,10 +23,11 @@
         </Grid.ColumnDefinitions>
         <Menu Name="menuTop" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
+                <MenuItem Header="Создать БД" Name="NewDB" Click="NewDB_Click"></MenuItem>
                 <MenuItem Header="Сохранить журнал в..." Name="Open">
-                    <MenuItem Header="JSON" Name="JSON" Click="JSON_Click"></MenuItem>
-                    <MenuItem Header="XML" Name="XML" Click="XML_Click"></MenuItem>
-                    <MenuItem Header="Excel" Name="Excel" Click="Excel_Click"></MenuItem>
+                <MenuItem Header="JSON" Name="JSON" Click="JSON_Click"></MenuItem>
+                <MenuItem Header="XML" Name="XML" Click="XML_Click"></MenuItem>
+                <MenuItem Header="Excel" Name="Excel" Click="Excel_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Сохранить профиль" Name="saveProfile" Click="SaveProfile_Click"></MenuItem>
                 <Separator />

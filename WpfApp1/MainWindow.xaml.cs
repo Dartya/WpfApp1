@@ -52,12 +52,12 @@ namespace WpfApp1
         {
 
         }
-
+        //окно справочной информации о функциях программы
         private void Manual_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
+        //окно "О программе"
         private void About_Click(object sender, RoutedEventArgs e)
         {
 
@@ -106,7 +106,15 @@ namespace WpfApp1
 
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            //код, получающий выбранную строку
+            DataRowView row = dtGrid.SelectedItem as DataRowView;
+            //MessageBox.Show(row.Row.ItemArray[1].ToString());
 
+            string blabla = "";
+            for (int i = 0; i < row.Row.ItemArray.Length; i++) {
+                blabla = (""+blabla + (row.Row.ItemArray[i].ToString())+"\n");
+            }
+            MessageBox.Show(blabla);
         }
         
         private void JSON_Click(object sender, RoutedEventArgs e)
@@ -139,5 +147,22 @@ namespace WpfApp1
 
         }
 
+        private void NewDB_Click(object sender, RoutedEventArgs e)
+        {
+            try{
+                MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
+
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM products", connection);
+                connection.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                connection.Close();
+
+                dtGrid.DataContext = dt;
+            }
+            catch (Exception exc) {
+                MessageBox.Show("НЕУДАЧА!\n"+exc.ToString());
+            }
+        }
     }
 }
