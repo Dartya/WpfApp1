@@ -70,7 +70,7 @@ namespace WpfApp1
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM phones", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM products", connection);
                 connection.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -83,15 +83,25 @@ namespace WpfApp1
                 MessageBox.Show(exc.ToString());
             }
         }
-
+        //окно добавления записи в БД
         private void AddMenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            RowAddEditWindow win = new RowAddEditWindow("Добавление записи");
+            win.Owner = this;
+            if (win.ShowDialog() == true)
+            {
+                MessageBox.Show("Запись добавлена");
+            }
         }
 
         private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            RowAddEditWindow win = new RowAddEditWindow("Редактирование записи");
+            win.Owner = this;
+            if (win.ShowDialog() == true)
+            {
+                MessageBox.Show("Запись отредактирована");
+            }
         }
 
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
@@ -128,5 +138,6 @@ namespace WpfApp1
         {
 
         }
+
     }
 }

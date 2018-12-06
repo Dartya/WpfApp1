@@ -50,14 +50,12 @@
         <Button Name="Cancel"
                 IsCancel="True"
                 Content="Отмена"
-                Grid.Row="4" Grid.Column="1"
-                Width="100" 
+                Grid.Row="4" Grid.Column="1" 
                 Height="30"
                 MinWidth="80" MinHeight="30" 
                 MaxWidth="200" MaxHeight="300"  
-                Click="cancel_button" 
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"/>
+                Click="cancel_button"
+                VerticalAlignment="Center" Margin="0,8,24,9" HorizontalAlignment="Right" Width="100"/>
 
         <TextBox Text="localhost"
                 Name="Server"

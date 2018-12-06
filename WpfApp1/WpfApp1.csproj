@@ -87,11 +87,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Currency.cs" />
+    <Compile Include="Classes\ETF.cs" />
+    <Compile Include="Classes\FinInfo.cs" />
+    <Compile Include="Classes\FinInstrument.cs" />
+    <Compile Include="Classes\Stock.cs" />
+    <Compile Include="Classes\Trade.cs" />
     <Compile Include="DBConnectionSettings.xaml.cs">
       <DependentUpon>DBConnectionSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="RiskProfile.xaml.cs">
       <DependentUpon>RiskProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RowAddEditWindow.xaml.cs">
+      <DependentUpon>RowAddEditWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="DBConnectionSettings.xaml">
       <SubType>Designer</SubType>
@@ -111,6 +120,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RiskProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RowAddEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
