@@ -153,7 +153,7 @@
         </GroupBox>
         <GroupBox Header="Финансовый результат" 
                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Height="80" Width="380"
+                  Height="100" Width="380"
                   Margin="5,5,5,5" 
                   Grid.Row="3" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical">
@@ -163,7 +163,19 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Margin="0,0,0,0"/>
-                    <Label x:Name="blabla"
+                    <Label x:Name="Comissions"
+                        Height="25" Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Налоги:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,0,0,0"/>
+                    <Label x:Name="Taxes"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
@@ -174,14 +186,14 @@
                         Height="25" Width="185" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Margin="0,5,0,0"/>
+                        Margin="0,0,0,0"/>
                     <Label x:Name="bla" 
                         BorderBrush="Black"
                         BorderThickness="1.2"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,5,0,0"/>
+                        Margin="0,0,0,0"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

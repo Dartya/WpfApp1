@@ -146,7 +146,7 @@ namespace WpfApp1
         {
 
         }
-
+        //создание новой БД
         private void NewDB_Click(object sender, RoutedEventArgs e)
         {
             try{
