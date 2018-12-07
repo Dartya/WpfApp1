@@ -54,13 +54,15 @@ namespace WpfApp1.Classes
             int iTradeClosed = Int32.Parse(row.Row.ItemArray[8].ToString());
             if (iTradeClosed == 0)
                 TradeClosed = false;
-            else TradeClosed = true;
-
-            Comission = float.Parse(row.Row.ItemArray[9].ToString());
-            Taxes = float.Parse(row.Row.ItemArray[10].ToString());
-            Profit = float.Parse(row.Row.ItemArray[11].ToString());
+            else {
+                TradeClosed = true;
+                Comission = float.Parse(row.Row.ItemArray[9].ToString());
+                Taxes = float.Parse(row.Row.ItemArray[10].ToString());
+                Profit = float.Parse(row.Row.ItemArray[11].ToString());
+            }
         }
 
+        //метод формирования строки удаления записи
         public string AddQuery() {
             int iTradeClosed = 0;
             if (TradeClosed == false) iTradeClosed = 0; else iTradeClosed = 1;

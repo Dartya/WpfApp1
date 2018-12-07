@@ -109,7 +109,7 @@ namespace WpfApp1
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e) { //метод удаляет выбранную запись по ее id
             //код, получающий выбранную строку
             DataRowView row = dtGrid.SelectedItem as DataRowView;
-
+            //пример запроса на удаление:
             //DELETE FROM `tradesassistant`.`trades` WHERE `id`= '1';
             try
             {
@@ -118,7 +118,6 @@ namespace WpfApp1
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM `"+dBconnection.DB+"`.`"+dBconnection.Table+"` WHERE `id`= '"+row.Row.ItemArray[0].ToString()+"';", connection);
                 MessageBox.Show(cmd.CommandText);
                 connection.Open();
-                DataTable dt = new DataTable();
                 cmd.ExecuteNonQuery();
                 connection.Close();
             }
