@@ -24,8 +24,13 @@ namespace WpfApp1.Classes
             connectionString = makeConnectionString(Server, DB, UID, Pass);
         }
 
-        public DBconnection(string server, string DB, string UID, string pass)
-        {    //конструктор соединения с параметрами
+        public DBconnection(string server, string DB, string UID, string pass) {    //конструктор соединения с параметрами
+            Server = server;
+            this.DB = DB;
+            Table = "trades";
+            this.UID = UID;
+            Pass = pass;
+
             connectionString = makeConnectionString(server, DB, UID, pass);
         }
 

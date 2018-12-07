@@ -23,11 +23,12 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        DBconnection dBconnection = new DBconnection("localhost", "tradesassistant", "root", "123456");
+        DBconnection dBconnection; //= new DBconnection("localhost", "tradesassistant", "root", "123456");
 
         public MainWindow()
         {
             InitializeComponent();
+            dBconnection = new DBconnection("localhost", "tradesassistant", "root", "123456");
         }
         //окно настроек соединения с БД  
         private void DBSettings_Click(object sender, RoutedEventArgs e)
@@ -70,7 +71,8 @@ namespace WpfApp1
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM "+dBconnection.Table+";", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM `"+dBconnection.DB+"`.`"+dBconnection.Table+"`;", connection);
+                MessageBox.Show(cmd.CommandText);
                 connection.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -104,17 +106,26 @@ namespace WpfApp1
             }
         }
 
-        private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
-        {
+        private void DeleteMenuItem_Click(object sender, RoutedEventArgs e) { //метод удаляет выбранную запись по ее id
             //код, получающий выбранную строку
             DataRowView row = dtGrid.SelectedItem as DataRowView;
-            //MessageBox.Show(row.Row.ItemArray[1].ToString());
-            Trade trade = new Trade(row);
-            /*string blabla = "";
-            for (int i = 0; i < row.Row.ItemArray.Length; i++) {
-                blabla = (""+blabla + (row.Row.ItemArray[i].ToString())+"\n");
+
+            //DELETE FROM `tradesassistant`.`trades` WHERE `id`= '1';
+            try
+            {
+                MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
+
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM `"+dBconnection.DB+"`.`"+dBconnection.Table+"` WHERE `id`= '"+row.Row.ItemArray[0].ToString()+"';", connection);
+                MessageBox.Show(cmd.CommandText);
+                connection.Open();
+                DataTable dt = new DataTable();
+                cmd.ExecuteNonQuery();
+                connection.Close();
             }
-            MessageBox.Show(blabla);*/
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
         }
         
         private void JSON_Click(object sender, RoutedEventArgs e)
