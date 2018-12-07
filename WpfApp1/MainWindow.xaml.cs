@@ -23,7 +23,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        DBconnection dBconnection = new DBconnection("localhost", "blabla", "root", "123456");
+        DBconnection dBconnection = new DBconnection("localhost", "tradesassistant", "root", "123456");
 
         public MainWindow()
         {
@@ -70,7 +70,7 @@ namespace WpfApp1
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM products", connection);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM "+dBconnection.Table+";", connection);
                 connection.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -109,12 +109,12 @@ namespace WpfApp1
             //код, получающий выбранную строку
             DataRowView row = dtGrid.SelectedItem as DataRowView;
             //MessageBox.Show(row.Row.ItemArray[1].ToString());
-
-            string blabla = "";
+            Trade trade = new Trade(row);
+            /*string blabla = "";
             for (int i = 0; i < row.Row.ItemArray.Length; i++) {
                 blabla = (""+blabla + (row.Row.ItemArray[i].ToString())+"\n");
             }
-            MessageBox.Show(blabla);
+            MessageBox.Show(blabla);*/
         }
         
         private void JSON_Click(object sender, RoutedEventArgs e)
@@ -149,19 +149,31 @@ namespace WpfApp1
         //создание новой БД
         private void NewDB_Click(object sender, RoutedEventArgs e)
         {
-            try{
-                MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
+            NewDBWindow win = new NewDBWindow();
+            win.Owner = this;
+            if (win.ShowDialog() == true) {
+                try{
+                    dBconnection.DB = win.Schema;
+                    dBconnection.Table = win.Table;
+                    MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM products", connection);
-                connection.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                connection.Close();
+                    MySqlCommand cmdCreateDB = new MySqlCommand(win.CreateDB(), connection);
+                    MySqlCommand cmdCreateTable = new MySqlCommand(win.CreateTable(), connection);
+                    //создание БД
+                    connection.Open();
+                    cmdCreateDB.ExecuteNonQuery();
+                    connection.Close();
+                    //создание таблицы
+                    connection.Open();
+                    cmdCreateTable.ExecuteNonQuery();
+                    connection.Close();
 
-                dtGrid.DataContext = dt;
-            }
-            catch (Exception exc) {
-                MessageBox.Show("НЕУДАЧА!\n"+exc.ToString());
+                    MessageBox.Show("База данных "+ win.Schema +" и таблица "+ win.Table + " успешно созданы.");
+                }
+            catch (Exception exc)
+                {
+                    MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
+                }
             }
         }
     }

@@ -8,18 +8,20 @@ namespace WpfApp1.Classes
 {
     public class DBconnection
     {
-        public string server { get; set; }
+        public string Server { get; set; }
         public string DB { get; set; }
+        public string Table { get; set; }
         public string UID { get; set; }
-        public string pass { get; set; }
-        public string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
+        public string Pass { get; set; }
+        public string connectionString = "SERVER=localhost;DATABASE=tradesassistant;UID=root;PASSWORD=123456;";
 
         public DBconnection() {    //стандартный конструктор соединения
-            server = "localhost";
-            DB = "blabla";
+            Server = "localhost";
+            DB = "tradesassistant";
+            Table = "trades";
             UID = "root";
-            pass = "123456";
-            connectionString = makeConnectionString(server, DB, UID, pass);
+            Pass = "123456";
+            connectionString = makeConnectionString(Server, DB, UID, Pass);
         }
 
         public DBconnection(string server, string DB, string UID, string pass)
@@ -35,27 +37,26 @@ namespace WpfApp1.Classes
             return connectionString;
         }
 
-        public string makeConnectionString()
-        {
-            string connectionString = "SERVER=" + server + ";" +
+        public string makeConnectionString() {
+            string connectionString = "SERVER=" + Server + ";" +
                 "DATABASE=" + DB + ";" +
                 "UID=" + UID + ";" +
-                "PASSWORD=" + pass + ";";
+                "PASSWORD=" + Pass + ";";
             return connectionString;
         }
 
         public void setParams(string server, string DB, string UID, string pass) {
-            this.server = server;
+            this.Server = server;
             this.DB = DB;
             this.UID = UID;
-            this.pass = pass;
+            this.Pass = pass;
         }
 
         public void setParams(DBconnection connection) {
-            server = connection.server;
+            Server = connection.Server;
             DB = connection.DB;
             UID = connection.UID;
-            pass = connection.pass;
+            Pass = connection.Pass;
         }
     }
 }

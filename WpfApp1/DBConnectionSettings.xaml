@@ -66,7 +66,7 @@
                 Width="120"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"/>
-        <TextBox Text="blabla"
+        <TextBox Text="tradesassistant"
                 Name="DB"
                 Grid.Row="1" Grid.Column="1" 
                 TextWrapping="Wrap"
