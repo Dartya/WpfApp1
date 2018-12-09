@@ -57,6 +57,12 @@ namespace WpfApp1.Classes
             this.Pass = pass;
         }
 
+        public void setParams(string DB, string Table)
+        {
+            this.DB = DB;
+            this.Table = Table;
+        }
+
         public void setParams(DBconnection connection) {
             Server = connection.Server;
             DB = connection.DB;

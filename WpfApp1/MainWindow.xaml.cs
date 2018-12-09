@@ -98,8 +98,10 @@ namespace WpfApp1
 
         private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            RowAddEditWindow win = new RowAddEditWindow("Редактирование записи");
+            DataRowView row = dtGrid.SelectedItem as DataRowView;
+            RowAddEditWindow win = new RowAddEditWindow("Редактирование записи", row);
             win.Owner = this;
+            
             if (win.ShowDialog() == true)
             {
                 MessageBox.Show("Запись отредактирована");
@@ -163,8 +165,8 @@ namespace WpfApp1
             win.Owner = this;
             if (win.ShowDialog() == true) {
                 try{
-                    dBconnection.DB = win.Schema;
-                    dBconnection.Table = win.Table;
+                    dBconnection.DB = win.Schema;   //костыль, работает, не трогай!
+                    dBconnection.Table = win.Table; //костыль, работает, не трогай!
                     MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
                     MySqlCommand cmdCreateDB = new MySqlCommand(win.CreateDB(), connection);
@@ -177,8 +179,8 @@ namespace WpfApp1
                     connection.Open();
                     cmdCreateTable.ExecuteNonQuery();
                     connection.Close();
-
                     MessageBox.Show("База данных "+ win.Schema +" и таблица "+ win.Table + " успешно созданы.");
+                    dBconnection.setParams(win.Schema, win.Table); //обновление подключения
                 }
             catch (Exception exc)
                 {

@@ -24,13 +24,13 @@ namespace WpfApp1.Classes
         public int InstrumentType { get; set; }
         public string Ticker { get; set; }
         public int TradeType { get; set; }
-        public float OpeningPrice { get; set; }
+        public decimal OpeningPrice { get; set; }
         public int TradeSize { get; set; }
-        public float TradeSum { get; set; }
+        public decimal TradeSum { get; set; }
         public bool TradeClosed { get; set; }
-        public float Comission { get; set; }
-        public float Taxes { get; set; }
-        public float Profit { get; set; }
+        public decimal Comission { get; set; }
+        public decimal Taxes { get; set; }
+        public decimal Profit { get; set; }
 
         //строка DataGrid
         DataRowView row;
@@ -47,18 +47,18 @@ namespace WpfApp1.Classes
             InstrumentType = Int32.Parse(row.Row.ItemArray[2].ToString());
             Ticker = row.Row.ItemArray[3].ToString();
             TradeType = Int32.Parse(row.Row.ItemArray[4].ToString());
-            OpeningPrice = float.Parse(row.Row.ItemArray[5].ToString());
+            OpeningPrice = decimal.Parse(row.Row.ItemArray[5].ToString());
             TradeSize = Int32.Parse(row.Row.ItemArray[6].ToString());
-            TradeSum = float.Parse(row.Row.ItemArray[7].ToString());
+            TradeSum = decimal.Parse(row.Row.ItemArray[7].ToString());
 
             int iTradeClosed = Int32.Parse(row.Row.ItemArray[8].ToString());
             if (iTradeClosed == 0)
                 TradeClosed = false;
             else {
                 TradeClosed = true;
-                Comission = float.Parse(row.Row.ItemArray[9].ToString());
-                Taxes = float.Parse(row.Row.ItemArray[10].ToString());
-                Profit = float.Parse(row.Row.ItemArray[11].ToString());
+                Comission = decimal.Parse(row.Row.ItemArray[9].ToString());
+                Taxes = decimal.Parse(row.Row.ItemArray[10].ToString());
+                Profit = decimal.Parse(row.Row.ItemArray[11].ToString());
             }
         }
 

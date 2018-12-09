@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Height="550" Width="400"
+        Height="600" Width="400"
         WindowStartupLocation="CenterScreen">
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -36,7 +36,7 @@
                         TextAlignment="Left"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,0,0,0"/>
+                        Margin="0,0,0,0" TextChanged="Instrument_name_TextChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Класс:" 
@@ -49,11 +49,11 @@
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,5,0,0"
+                        Margin="0,5,0,0" SelectionChanged="Instrument_class_SelectionChanged"
                         >
-                        <ComboBoxItem IsSelected="True">0</ComboBoxItem>
-                        <ComboBoxItem>1</ComboBoxItem>
-                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">Валюта</ComboBoxItem>
+                        <ComboBoxItem>Акция</ComboBoxItem>
+                        <ComboBoxItem>Фьючерс</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
@@ -67,7 +67,7 @@
                         TextAlignment="Left"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,5,0,0"/>
+                        Margin="0,5,0,0" TextChanged="Instrument_ticker_TextChanged"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
@@ -88,9 +88,9 @@
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,0,0,0">
-                        <ComboBoxItem IsSelected="True">0</ComboBoxItem>
-                        <ComboBoxItem>1</ComboBoxItem>
+                        Margin="0,0,0,0" SelectionChanged="Trade_type_SelectionChanged">
+                        <ComboBoxItem IsSelected="True">Long</ComboBoxItem>
+                        <ComboBoxItem>Short</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
@@ -100,23 +100,25 @@
                         VerticalAlignment="Top"
                         Margin="0,5,0,0"/>
                     <TextBox x:Name="opening_price"
+                        PreviewTextInput="NumberValidationTextBox"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,5,0,0"/>
+                        Margin="0,5,0,0" TextChanged="Opening_price_TextChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Объем позиции:" 
+                    <Label Content="Объем позиции:"
                         Height="25" Width="185" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Margin="0,5,0,0"/>
                     <TextBox x:Name="trade_size"
+                        PreviewTextInput="NumberValidationTextBox"
                         Height="25" Width="150" 
                         TextAlignment="Left"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,5,0,0"/>
+                        TextChanged="Trade_size_TextChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Сумма позиции:" 
@@ -134,16 +136,19 @@
         </GroupBox>
         <GroupBox Header="Закрытие сделки" 
                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Height="80" Width="380"
+                  Height="110" Width="480"
                   Margin="5,5,5,5" 
                   Grid.Row="2" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Content="Сделка закрыта" 
+                    <CheckBox Content="Сделка закрыта"
+                        Name="checkbox"
                         Height="25" Width="185" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Margin="0,5,0,0"/>
+                        Margin="0,5,0,0" 
+                        Checked="CheckBox_Checked"
+                        Unchecked="CheckBox_Unchecked"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Цена закрытия:" 
@@ -155,7 +160,20 @@
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,0,0,0"/>
+                        Margin="0,0,0,0" 
+                        TextChanged="Closing_price_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Сумма закрытой позиции:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
+                    <Label x:Name="closed_position_volume"
+                        Height="25" Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
@@ -171,7 +189,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Margin="0,0,0,0"/>
-                    <Label x:Name="Comissions"
+                    <Label x:Name="comissions"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
@@ -183,7 +201,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Margin="0,0,0,0"/>
-                    <Label x:Name="Taxes"
+                    <Label x:Name="taxes"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
@@ -195,7 +213,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Margin="0,0,0,0"/>
-                    <Label x:Name="bla" 
+                    <Label x:Name="FinProfit" 
                         BorderBrush="Black"
                         BorderThickness="1.2"
                         Height="25" Width="150"
