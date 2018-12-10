@@ -119,7 +119,25 @@ namespace WpfApp1.Classes
         }
 
         public string EditQuery() {
-            string query = "";
+            roundParams();
+            int iTradeClosed = 0;
+            if (TradeClosed == false) iTradeClosed = 0; else iTradeClosed = 1;
+
+            //UPDATE `tradesassistant`.`trades` SET `trade_type`='0', `trade_sum`='2120.00' WHERE `id`='6';
+            string query = "UPDATE `" + Schema + "`.`" + Table + "` SET " +
+                "`instrument_name`='" + InstrumentName + "', " +
+                "`instrument_class`='" + InstrumentType.ToString() + "', " +
+                "`instrument_ticker`='" + Ticker + "', " +
+                "`trade_type`='" + TradeType.ToString() + "', " +
+                "`opening_price`='" + OpeningPrice.ToString().Replace(",", ".") + "', " +
+                "`trade_volume`='" + TradeSize.ToString() + "', " +
+                "`trade_sum`='" + TradeSum.ToString().Replace(",", ".") + "', " +
+                "`trade_closed`='" + iTradeClosed.ToString() + "', " +
+                "`closing_price`='" + ClosingPrice.ToString().Replace(",", ".") + "', " +
+                "`comissions`='" + Comission.ToString().Replace(",", ".") + "', " +
+                "`taxes`='" + Taxes.ToString().Replace(",", ".") + "', " +
+                "`profit`='" + Profit.ToString().Replace(",", ".") + "', " +
+                "WHERE `id`='" + TradeId + "`";
 
             return query;
         }

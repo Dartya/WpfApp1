@@ -105,6 +105,7 @@ namespace WpfApp1
             
             if (win.ShowDialog() == true)
             {
+
                 MessageBox.Show("Запись отредактирована");
             }
         }
