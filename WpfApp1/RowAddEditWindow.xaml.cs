@@ -43,7 +43,7 @@ namespace WpfApp1
         private decimal Taxes;
         private decimal Comissions = 2m;
         private decimal Profit;
-        private int LongShortKoef = 1; //1 - Long, -1 - Short
+        private int iSelectedTradeType = 0; //0 - Long, 1 - Short
 
         //метод вычисления суммы открытой позиции
         public void countPosition_volume() {
@@ -87,7 +87,7 @@ namespace WpfApp1
                 Trade_size = 0;
             else Trade_size = int.Parse(trade_size.Text);
 
-            Position_Volume_CloseSum = (Closing_price * Trade_size) * LongShortKoef;
+            Position_Volume_CloseSum = (Closing_price * Trade_size);
             closed_position_volume.Content = Position_Volume_CloseSum.ToString();
         }
 
@@ -105,26 +105,44 @@ namespace WpfApp1
         //метод вычисления комиссионных издержек
         public void countComissions() {
             countPosition_Volume_CloseSum();
-
-            Comissions = 2m;
-            if (Position_Volume > 10000m || Position_Volume_CloseSum > 10000m)
-                Comissions += Position_Volume_CloseSum * 0.00017m;
-            else Comissions = 2m;
-            comissions.Content = Comissions.ToString();
+            if (checkbox.IsChecked == true) {
+                Comissions = 2m;
+                if (Position_Volume > 10000m || Position_Volume_CloseSum > 10000m)
+                    Comissions += Position_Volume_CloseSum * 0.00017m;
+                else Comissions = 2m;
+                comissions.Content = Comissions.ToString();
+            }
         }
 
         //метод вычисления налогов
         public void countTaxes() {
-            if (Position_Volume_CloseSum - Position_Volume > 0)
-                Taxes = (Position_Volume_CloseSum - Position_Volume) * TAX;
-            else Taxes = 0;
+            if (iSelectedTradeType == 0) {
+                if (Position_Volume_CloseSum - Position_Volume > 0)
+                    Taxes = (Position_Volume_CloseSum - Position_Volume) * TAX;
+                else Taxes = 0;
+            }
+            else if (iSelectedTradeType == 1) {
+                if (Position_Volume - Position_Volume_CloseSum > 0)
+                    Taxes = (Position_Volume - Position_Volume_CloseSum) * TAX;
+                else Taxes = 0;
+            }
             taxes.Content = Taxes.ToString();
         }
 
         //метод вычисления профита
         public void countProfit() {
-            Profit = Position_Volume_CloseSum - Position_Volume - Taxes - Comissions;
-            FinProfit.Content = Profit.ToString();
+            if (checkbox.IsChecked == true) {
+                if (iSelectedTradeType == 0)
+                {
+                    Profit = Position_Volume_CloseSum - Position_Volume - Taxes - Comissions;
+                    FinProfit.Content = Profit.ToString();
+                }
+                else if (iSelectedTradeType == 1)
+                {
+                    Profit = Position_Volume - Position_Volume_CloseSum - Taxes - Comissions;
+                    FinProfit.Content = Profit.ToString();
+                }
+            }
         }
 
         //общий метод высиления всех указанных выше параметров
@@ -180,13 +198,13 @@ namespace WpfApp1
 
             switch (SelectedInstrumentClass)
             {
-                case "Валюта":
+                case "System.Windows.Controls.ComboBoxItem: Валюта":
                     iInstrumentClass = 0;
                     break;
-                case "Акция":
+                case "System.Windows.Controls.ComboBoxItem: Акция":
                     iInstrumentClass = 1;
                     break;
-                case "Фьючерс":
+                case "System.Windows.Controls.ComboBoxItem: Фьючерс":
                     iInstrumentClass = 2;
                     break;
             }
@@ -194,27 +212,16 @@ namespace WpfApp1
         }
         private void Trade_type_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox combobox = (ComboBox)sender;
-            ComboBoxItem selectedItem = (ComboBoxItem)combobox.SelectedItem;
-            if (selectedItem != null)
-            {
-                SelectedTradeType = selectedItem.Content.ToString();
-
-                MessageBox.Show(SelectedTradeType);
-            }
-            int iSelectedTradeType = 0;
-            /*SelectedTradeType = trade_type.SelectedValue.ToString();
-            MessageBox.Show(trade_type.SelectedValue.ToString());*/
+            SelectedTradeType = trade_type.SelectedItem.ToString(); //КОСТЫЛЬ, когда будет время - исправить!
+            //MessageBox.Show(SelectedTradeType);
 
             switch (SelectedTradeType) {
-                case "Long":
+                case "System.Windows.Controls.ComboBoxItem: Long":  //да, костыль! времени нет
                     iSelectedTradeType = 0;
-                    LongShortKoef = 1;
                     countAll();
                     break;
-                case "Short":
+                case "System.Windows.Controls.ComboBoxItem: Short": //да, костыль! времени нет
                     iSelectedTradeType = 1;
-                    LongShortKoef = -1;
                     countAll();
                     break;
             }
@@ -253,6 +260,5 @@ namespace WpfApp1
         {
             trade.Ticker = instrument_ticker.Text;
         }
-
     }
 }
