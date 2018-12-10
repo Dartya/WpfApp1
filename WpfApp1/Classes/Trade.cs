@@ -56,27 +56,18 @@ namespace WpfApp1.Classes
         public Trade(DataRowView row) {
             Schema = "tradesassistant";
             Table = "trade";
-            int iTradeClosed = 0;
 
             this.row = row;
-            TradeId = Int32.Parse(row.Row.ItemArray[0].ToString());
+            TradeId = int.Parse(row.Row.ItemArray[0].ToString());
             InstrumentName = row.Row.ItemArray[1].ToString();
-            InstrumentType = Int32.Parse(row.Row.ItemArray[2].ToString());
+            InstrumentType = int.Parse(row.Row.ItemArray[2].ToString());
             Ticker = row.Row.ItemArray[3].ToString();
-            TradeType = Int32.Parse(row.Row.ItemArray[4].ToString());
+            TradeType = int.Parse(row.Row.ItemArray[4].ToString());
             OpeningPrice = decimal.Parse(row.Row.ItemArray[5].ToString());
-            TradeSize = Int32.Parse(row.Row.ItemArray[6].ToString());
+            TradeSize = int.Parse(row.Row.ItemArray[6].ToString());
             TradeSum = decimal.Parse(row.Row.ItemArray[7].ToString());
 
-            //отладка
-            //iTradeClosed = Int32.Parse(row.Row.ItemArray[8].ToString());
-            /*if (iTradeClosed == 0)
-                TradeClosed = false;
-            else */ 
-            //пусть пока здесь побудет. если все будет ок - удалю
-
-            TradeClosed = (bool)row.Row.ItemArray[8]; // работает
-
+            TradeClosed = (bool)row.Row.ItemArray[8];
             if (TradeClosed == true) {
                 TradeClosed = true;
                 ClosingPrice = decimal.Parse(row.Row.ItemArray[9].ToString());

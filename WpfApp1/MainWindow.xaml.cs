@@ -199,7 +199,7 @@ namespace WpfApp1
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM `" + dBconnection.DB + "`.`" + dBconnection.Table + "`;", connection);
-                MessageBox.Show(cmd.CommandText);
+                //MessageBox.Show(cmd.CommandText);
                 connection.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());

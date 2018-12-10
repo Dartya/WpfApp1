@@ -68,8 +68,9 @@ namespace WpfApp1
             trade = new Trade(row);
             Title = title;
             InitializeComponent();
+            checkbox.IsChecked = trade.TradeClosed;         //флаг закрытия сделки
 
-            getTradeData();
+            getTradeData(row);
         }
 
         //метод обновления данных объекта trade
@@ -89,41 +90,40 @@ namespace WpfApp1
         }
 
         //метод получения данных из трейда
-        private void getTradeData() {
+        private void getTradeData(DataRowView row) {
+            instrument_name.Text = row.Row.ItemArray[1].ToString();    //имя инструмента
 
-            instrument_name.Text = trade.InstrumentName;    //имя инструмента
-            /*switch (trade.InstrumentType) {                 //комбобокс класс инструмента
+            switch ((int)row.Row.ItemArray[2]) { //комбобокс класс инструмента
                 case 0:
-                    instrument_class.SelectedItem = instrument_class.FindName("Валюта");
+                    instrument_class.SelectedIndex = 0; //"Валюта"
                     break;
                 case 1:
-                    instrument_class.SelectedItem = instrument_class.FindName("Акция");
+                    instrument_class.SelectedIndex = 1;//"Акция";
                     break;
                 case 2:
-                    instrument_class.SelectedItem = instrument_class.FindName("Фьючерс");
+                    instrument_class.SelectedIndex = 2;// "Фьючерс";
                     break;
-            }*/
+            }
 
-            instrument_ticker.Text = trade.Ticker;          //тикер инструмента
-            instrument_name.Text = trade.InstrumentName;    //имя инструмента
+            instrument_ticker.Text = row.Row.ItemArray[3].ToString();  //тикер инструмента
 
-            /*switch (trade.TradeType) {                      //комбобокс тип сделки
+            switch ((int)row.Row.ItemArray[4]) { //комбобокс тип сделки
                 case 0:
-                    trade_type.SelectedItem = trade_type.FindName("Long");
+                    trade_type.SelectedIndex = 0; //"Long";
                     break;
                 case 1:
-                    trade_type.SelectedItem = trade_type.FindName("Short");
+                    trade_type.SelectedIndex = 1; //"Short";
                     break;
-            }*/
+            }
 
-            opening_price.Text = trade.OpeningPrice.ToString().Replace(".", ",");   //цена открытия
-            trade_size.Text = trade.TradeSize.ToString();   //объем позиции
-            position_volume.Content = trade.TradeSum.ToString().Replace(".", ",");  //сумма открытия сделки
-            checkbox.IsChecked = trade.TradeClosed;         //флаг закрытия сделки
-            closing_price.Text = trade.ClosingPrice.ToString().Replace(".", ",");   //цена закрытия сделки
-            comissions.Content = trade.Comission.ToString().Replace(".", ",");      //комиссии
-            taxes.Content = trade.Taxes.ToString().Replace(".", ",");               //налоги
-            FinProfit.Content = trade.Profit.ToString().Replace(".", ",");          //профит
+            opening_price.Text = row.Row.ItemArray[5].ToString();       //цена открытия
+
+            trade_size.Text = row.Row.ItemArray[6].ToString();          //объем позиции
+            position_volume.Content = row.Row.ItemArray[7].ToString();  //сумма открытия сделки
+            closing_price.Text = row.Row.ItemArray[9].ToString();       //цена закрытия сделки
+            comissions.Content = row.Row.ItemArray[10].ToString();      //комиссии
+            taxes.Content = row.Row.ItemArray[11].ToString();               //налоги
+            FinProfit.Content = row.Row.ItemArray[12].ToString();          //профит
         }
 
         //метод вычисления суммы открытой позиции
