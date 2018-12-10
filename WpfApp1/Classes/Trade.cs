@@ -121,7 +121,14 @@ namespace WpfApp1.Classes
         public string EditQuery() {
             roundParams();
             int iTradeClosed = 0;
-            if (TradeClosed == false) iTradeClosed = 0; else iTradeClosed = 1;
+            if (TradeClosed == false) {
+                iTradeClosed = 0;
+                ClosingPrice = 0;
+                Comission = 0;
+                Taxes = 0;
+                Profit = 0;
+            }
+            else iTradeClosed = 1;
 
             //UPDATE `tradesassistant`.`trades` SET `trade_type`='0', `trade_sum`='2120.00' WHERE `id`='6';
             string query = "UPDATE `" + Schema + "`.`" + Table + "` SET " +
@@ -136,8 +143,8 @@ namespace WpfApp1.Classes
                 "`closing_price`='" + ClosingPrice.ToString().Replace(",", ".") + "', " +
                 "`comissions`='" + Comission.ToString().Replace(",", ".") + "', " +
                 "`taxes`='" + Taxes.ToString().Replace(",", ".") + "', " +
-                "`profit`='" + Profit.ToString().Replace(",", ".") + "', " +
-                "WHERE `id`='" + TradeId + "`";
+                "`profit`='" + Profit.ToString().Replace(",", ".") + "' " +
+                "WHERE `id`='" + TradeId + "';";
 
             return query;
         }

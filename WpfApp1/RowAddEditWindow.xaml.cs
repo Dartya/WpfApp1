@@ -122,8 +122,8 @@ namespace WpfApp1
             position_volume.Content = row.Row.ItemArray[7].ToString();  //сумма открытия сделки
             closing_price.Text = row.Row.ItemArray[9].ToString();       //цена закрытия сделки
             comissions.Content = row.Row.ItemArray[10].ToString();      //комиссии
-            taxes.Content = row.Row.ItemArray[11].ToString();               //налоги
-            FinProfit.Content = row.Row.ItemArray[12].ToString();          //профит
+            taxes.Content = row.Row.ItemArray[11].ToString();           //налоги
+            FinProfit.Content = row.Row.ItemArray[12].ToString();       //профит
         }
 
         //метод вычисления суммы открытой позиции

@@ -102,11 +102,29 @@ namespace WpfApp1
             DataRowView row = dtGrid.SelectedItem as DataRowView;
             RowAddEditWindow win = new RowAddEditWindow("Редактирование записи", row);
             win.Owner = this;
-            
+
             if (win.ShowDialog() == true)
             {
+                string query;
+                win.trade.setDataBaseParams(dBconnection.DB, dBconnection.Table);
+                query = win.trade.EditQuery();
+                try
+                {
+                    MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
-                MessageBox.Show("Запись отредактирована");
+                    MySqlCommand cmdAddDB = new MySqlCommand(query, connection);
+                    //создание БД
+                    connection.Open();
+                    cmdAddDB.ExecuteNonQuery();
+                    connection.Close();
+
+                    MessageBox.Show("Запись отредактирована");
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
+                }
+                refreshData();
             }
         }
 
