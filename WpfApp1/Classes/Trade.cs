@@ -28,6 +28,7 @@ namespace WpfApp1.Classes
         public int TradeSize { get; set; }
         public decimal TradeSum { get; set; }
         public bool TradeClosed { get; set; }
+        public decimal ClosingPrice { get; set; }
         public decimal Comission { get; set; }
         public decimal Taxes { get; set; }
         public decimal Profit { get; set; }
@@ -36,6 +37,7 @@ namespace WpfApp1.Classes
         private void roundParams() {
             OpeningPrice = decimal.Round(OpeningPrice, 2);
             TradeSum = decimal.Round(TradeSum, 2);
+            ClosingPrice = decimal.Round(ClosingPrice, 2);
             Comission = decimal.Round(Comission, 2);
             Taxes = decimal.Round(Taxes, 2);
             Profit = decimal.Round(Profit, 2);
@@ -54,6 +56,7 @@ namespace WpfApp1.Classes
         public Trade(DataRowView row) {
             Schema = "tradesassistant";
             Table = "trade";
+            int iTradeClosed = 0;
 
             this.row = row;
             TradeId = Int32.Parse(row.Row.ItemArray[0].ToString());
@@ -65,14 +68,21 @@ namespace WpfApp1.Classes
             TradeSize = Int32.Parse(row.Row.ItemArray[6].ToString());
             TradeSum = decimal.Parse(row.Row.ItemArray[7].ToString());
 
-            int iTradeClosed = Int32.Parse(row.Row.ItemArray[8].ToString());
-            if (iTradeClosed == 0)
+            //отладка
+            //iTradeClosed = Int32.Parse(row.Row.ItemArray[8].ToString());
+            /*if (iTradeClosed == 0)
                 TradeClosed = false;
-            else {
+            else */ 
+            //пусть пока здесь побудет. если все будет ок - удалю
+
+            TradeClosed = (bool)row.Row.ItemArray[8]; // работает
+
+            if (TradeClosed == true) {
                 TradeClosed = true;
-                Comission = decimal.Parse(row.Row.ItemArray[9].ToString());
-                Taxes = decimal.Parse(row.Row.ItemArray[10].ToString());
-                Profit = decimal.Parse(row.Row.ItemArray[11].ToString());
+                ClosingPrice = decimal.Parse(row.Row.ItemArray[9].ToString());
+                Comission = decimal.Parse(row.Row.ItemArray[10].ToString());
+                Taxes = decimal.Parse(row.Row.ItemArray[11].ToString());
+                Profit = decimal.Parse(row.Row.ItemArray[12].ToString());
             }
         }
 
@@ -98,6 +108,7 @@ namespace WpfApp1.Classes
                 "`trade_closed`, " +
                 "`closing_price`, " +
                 "`comissions`, " +
+                "`taxes`, " +
                 "`profit`) " +
                 "VALUES ('"+
                 InstrumentName+ "', '"
@@ -107,7 +118,8 @@ namespace WpfApp1.Classes
                 + OpeningPrice.ToString().Replace(",", ".") + "', '"
                 + TradeSize.ToString() + "', '"
                 + TradeSum.ToString().Replace(",", ".") + "', '"
-                + iTradeClosed.ToString() + "', '" 
+                + iTradeClosed.ToString() + "', '"
+                + ClosingPrice.ToString().Replace(",", ".") + "', '"
                 + Comission.ToString().Replace(",", ".") + "', '" 
                 + Taxes.ToString().Replace(",", ".") + "', '" 
                 + Profit.ToString().Replace(",", ".") + "');";

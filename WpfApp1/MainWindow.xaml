@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Журнал торговых операций" Height="350" Width="1000"
+        Title="Журнал торговых операций" Height="350" Width="1100"
         MinHeight="350 px"
         MinWidth="450 px"
         WindowStartupLocation="CenterScreen"

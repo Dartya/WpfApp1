@@ -52,19 +52,78 @@ namespace WpfApp1
         private decimal Profit;
         private int iSelectedTradeType = 0; //0 - Long, 1 - Short
 
+        //конструктор экрана добавления записи
+        public RowAddEditWindow(string title)
+        {
+            trade = new Trade();
+            Title = title;
+            InitializeComponent();
+            closing_price.IsReadOnly = true;
+
+            setParamsNull();
+        }
+        //конструктор экрана редактирования записи
+        public RowAddEditWindow(string title, DataRowView row)
+        {
+            trade = new Trade(row);
+            Title = title;
+            InitializeComponent();
+
+            getTradeData();
+        }
+
         //метод обновления данных объекта trade
         private void updateTradeParams() {
-            trade.InstrumentName = instrument_name.Text;
-            trade.InstrumentType = iInstrumentType;
-            trade.Ticker = instrument_ticker.Text;
-            trade.TradeType = iSelectedTradeType;
-            trade.OpeningPrice = Opening_price;
-            trade.TradeSize = Trade_size;
-            trade.TradeSum = Position_Volume;
-            trade.TradeClosed = (bool)checkbox.IsChecked;
-            trade.Comission = Comissions;
-            trade.Taxes = Taxes;
-            trade.Profit = Profit;
+            trade.InstrumentName = instrument_name.Text;    //имя инструмента
+            trade.InstrumentType = iInstrumentType;         //класс инструмента
+            trade.Ticker = instrument_ticker.Text;          //тикер инструмента
+            trade.TradeType = iSelectedTradeType;           //тип сделки
+            trade.OpeningPrice = Opening_price;             //цена открытия
+            trade.TradeSize = Trade_size;                   //объем позиции
+            trade.TradeSum = Position_Volume;               //сумма открытия сделки
+            trade.TradeClosed = (bool)checkbox.IsChecked;   //флаг закрытия сделки
+            trade.ClosingPrice = Closing_price;             //цена закрытия
+            trade.Comission = Comissions;                   //комисии
+            trade.Taxes = Taxes;                            //налоги
+            trade.Profit = Profit;                          //финансовый результат
+        }
+
+        //метод получения данных из трейда
+        private void getTradeData() {
+
+            instrument_name.Text = trade.InstrumentName;    //имя инструмента
+            /*switch (trade.InstrumentType) {                 //комбобокс класс инструмента
+                case 0:
+                    instrument_class.SelectedItem = instrument_class.FindName("Валюта");
+                    break;
+                case 1:
+                    instrument_class.SelectedItem = instrument_class.FindName("Акция");
+                    break;
+                case 2:
+                    instrument_class.SelectedItem = instrument_class.FindName("Фьючерс");
+                    break;
+            }*/
+
+            instrument_ticker.Text = trade.Ticker;          //тикер инструмента
+            instrument_name.Text = trade.InstrumentName;    //имя инструмента
+
+            /*switch (trade.TradeType) {                      //комбобокс тип сделки
+                case 0:
+                    trade_type.SelectedItem = trade_type.FindName("Long");
+                    break;
+                case 1:
+                    trade_type.SelectedItem = trade_type.FindName("Short");
+                    break;
+            }*/
+
+            opening_price.Text = trade.OpeningPrice.ToString().Replace(".", ",");   //цена открытия
+            trade_size.Text = trade.TradeSize.ToString();   //объем позиции
+            position_volume.Content = trade.TradeSum.ToString().Replace(".", ",");  //сумма открытия сделки
+            checkbox.IsChecked = trade.TradeClosed;         //флаг закрытия сделки
+            closing_price.Text = trade.ClosingPrice.ToString().Replace(".", ",");   //цена закрытия сделки
+            comissions.Content = trade.Comission.ToString().Replace(".", ",");      //комиссии
+            taxes.Content = trade.Taxes.ToString().Replace(".", ",");               //налоги
+            FinProfit.Content = trade.Profit.ToString().Replace(".", ",");          //профит
         }
 
         //метод вычисления суммы открытой позиции
@@ -176,7 +235,7 @@ namespace WpfApp1
                     Comissions += Position_Volume_CloseSum * 0.00017m;
                 else Comissions = 2m;
                 comissions.Content = Comissions.ToString();
-            }
+            } else Comissions = 0;
             updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
 
@@ -221,26 +280,6 @@ namespace WpfApp1
             countTaxes();
             countProfit();
             updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
-        }
-
-        public RowAddEditWindow(string title)
-        {
-            trade = new Trade();
-            Title = title;
-            InitializeComponent();
-            closing_price.IsReadOnly = true;
-
-            setParamsNull();
-        }
-
-        public RowAddEditWindow(string title, DataRowView row)
-        {
-            trade = new Trade(row);
-            Title = title;
-            InitializeComponent();
-            closing_price.IsReadOnly = true;
-
-            setParamsNull();
         }
 
         public void enter_button(object sender, RoutedEventArgs e)

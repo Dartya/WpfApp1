@@ -41,13 +41,14 @@ namespace WpfApp1
                 "instrument_class INT NOT NULL, " +
                 "instrument_ticker VARCHAR(45) NOT NULL, " +
                 "trade_type INT NOT NULL, " +
-                "opening_price DECIMAL(7, 2) NOT NULL, " +
+                "opening_price DECIMAL(10,2) NOT NULL, " +
                 "trade_volume INT NOT NULL, " +
-                "trade_sum DECIMAL(7,2) NOT NULL, " +
+                "trade_sum DECIMAL(10,2) NOT NULL, " +
                 "trade_closed TINYINT(1), " +
-                "closing_price DECIMAL(7,2) NULL, " +
-                "comissions DECIMAL(7,2) NULL, " +
-                "profit DECIMAL(7,2) NULL, " +
+                "closing_price DECIMAL(10,2) NULL, " +
+                "taxes DECIMAL(10,2) NULL," +
+                "comissions DECIMAL(10,2) NULL, " +
+                "profit DECIMAL(10,2) NULL, " +
                 "PRIMARY KEY(id)); ";
             return query;
         }
