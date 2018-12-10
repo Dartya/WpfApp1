@@ -29,6 +29,7 @@ namespace WpfApp1
         {
             InitializeComponent();
             dBconnection = new DBconnection("localhost", "tradesassistant", "root", "123456");
+            refreshData();
         }
         //окно настроек соединения с БД  
         private void DBSettings_Click(object sender, RoutedEventArgs e)
@@ -66,24 +67,7 @@ namespace WpfApp1
 
         private void RefreshMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
-            try
-            {
-                MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
-
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM `"+dBconnection.DB+"`.`"+dBconnection.Table+"`;", connection);
-                MessageBox.Show(cmd.CommandText);
-                connection.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                connection.Close();
-
-                dtGrid.DataContext = dt;
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.ToString());
-            }
+            refreshData();
         }
         //окно добавления записи в БД
         private void AddMenuItem_Click(object sender, RoutedEventArgs e)
@@ -92,7 +76,24 @@ namespace WpfApp1
             win.Owner = this;
             if (win.ShowDialog() == true)
             {
-                MessageBox.Show("Запись добавлена");
+                string query;
+                win.trade.setDataBaseParams(dBconnection.DB, dBconnection.Table);
+                query = win.trade.AddQuery();
+                try {
+                    MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
+
+                    MySqlCommand cmdAddDB = new MySqlCommand(query, connection);
+                    //создание БД
+                    connection.Open();
+                    cmdAddDB.ExecuteNonQuery();
+                    connection.Close();
+
+                    MessageBox.Show("Запись добавлена");
+                } catch (Exception exc)
+                {
+                    MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
+                }
+                refreshData();
             }
         }
 
@@ -127,6 +128,7 @@ namespace WpfApp1
             {
                 MessageBox.Show(exc.ToString());
             }
+            refreshData();
         }
         
         private void JSON_Click(object sender, RoutedEventArgs e)
@@ -186,6 +188,28 @@ namespace WpfApp1
                 {
                     MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
                 }
+            }
+        }
+
+        //метод обновления данных
+        private void refreshData() {
+            //string connectionString = "SERVER=localhost;DATABASE=mobiledb;UID=root;PASSWORD=123456;";
+            try
+            {
+                MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
+
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM `" + dBconnection.DB + "`.`" + dBconnection.Table + "`;", connection);
+                MessageBox.Show(cmd.CommandText);
+                connection.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                connection.Close();
+
+                dtGrid.DataContext = dt;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
             }
         }
     }

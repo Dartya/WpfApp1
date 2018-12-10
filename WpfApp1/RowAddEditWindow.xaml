@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         <GroupBox Header="Инструмент" 
                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Height="110" Width="380"
+                  Height="110" Width="370"
                   Margin="5,5,5,5" 
                   Grid.Row="0" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical">
@@ -73,7 +73,7 @@
         </GroupBox>
         <GroupBox Header="Открытие сделки" 
                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Height="140" Width="380"
+                  Height="140" Width="370"
                   Margin="5,5,5,5" 
                   Grid.Row="1" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical">
@@ -100,7 +100,7 @@
                         VerticalAlignment="Top"
                         Margin="0,5,0,0"/>
                     <TextBox x:Name="opening_price"
-                        PreviewTextInput="NumberValidationTextBox"
+                        PreviewTextInput="DecimalValidationTextBox"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
@@ -113,9 +113,10 @@
                         VerticalAlignment="Top"
                         Margin="0,5,0,0"/>
                     <TextBox x:Name="trade_size"
-                        PreviewTextInput="NumberValidationTextBox"
+                        PreviewTextInput="IntValidationTextBox"
                         Height="25" Width="150" 
                         TextAlignment="Left"
+                        Margin="0,5,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         TextChanged="Trade_size_TextChanged"/>
@@ -136,7 +137,7 @@
         </GroupBox>
         <GroupBox Header="Закрытие сделки" 
                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Height="110" Width="480"
+                  Height="110" Width="370"
                   Margin="5,5,5,5" 
                   Grid.Row="2" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical">
@@ -157,6 +158,7 @@
                         VerticalAlignment="Top"
                         Margin="0,0,0,0"/>
                     <TextBox x:Name="closing_price"
+                        PreviewTextInput="DecimalValidationTextBox"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
@@ -179,7 +181,7 @@
         </GroupBox>
         <GroupBox Header="Финансовый результат" 
                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Height="100" Width="380"
+                  Height="100" Width="370"
                   Margin="5,5,5,5" 
                   Grid.Row="3" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical">

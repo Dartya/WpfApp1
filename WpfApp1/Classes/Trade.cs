@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows;
 
 namespace WpfApp1.Classes
 {
@@ -15,8 +15,8 @@ namespace WpfApp1.Classes
         public enum TradeType { Long = 1 , Short }*/
 
         //свойства БД
-        public string Schema { get; set; }
-        public string Table { get; set; }
+        private string Schema;
+        private string Table;
 
         //свойства трейда
         public int TradeId { get; set; }
@@ -32,15 +32,29 @@ namespace WpfApp1.Classes
         public decimal Taxes { get; set; }
         public decimal Profit { get; set; }
 
+        //округление параметров
+        private void roundParams() {
+            OpeningPrice = decimal.Round(OpeningPrice, 2);
+            TradeSum = decimal.Round(TradeSum, 2);
+            Comission = decimal.Round(Comission, 2);
+            Taxes = decimal.Round(Taxes, 2);
+            Profit = decimal.Round(Profit, 2);
+        }
+
         //строка DataGrid
         DataRowView row;
 
         //конструктор без параметра
-        public Trade(){
+        public Trade() {
+            Schema = "tradesassistant";
+            Table = "trade";
         }
 
         //конструктор с параметром выбранной строки
         public Trade(DataRowView row) {
+            Schema = "tradesassistant";
+            Table = "trade";
+
             this.row = row;
             TradeId = Int32.Parse(row.Row.ItemArray[0].ToString());
             InstrumentName = row.Row.ItemArray[1].ToString();
@@ -62,8 +76,15 @@ namespace WpfApp1.Classes
             }
         }
 
+        //установка значений имени БД и таблицы
+        public void setDataBaseParams(string schema, string table) {
+            Schema = schema;
+            Table = table;
+        }
+
         //метод формирования строки удаления записи
         public string AddQuery() {
+            roundParams();
             int iTradeClosed = 0;
             if (TradeClosed == false) iTradeClosed = 0; else iTradeClosed = 1;
             string query = "INSERT INTO `"+Schema+"`.`"+Table+"` " +
@@ -83,13 +104,13 @@ namespace WpfApp1.Classes
                 +InstrumentType.ToString() +"', '"
                 +Ticker+ "', '"
                 +TradeType.ToString() + "', '"
-                + OpeningPrice.ToString() + "', '"
+                + OpeningPrice.ToString().Replace(",", ".") + "', '"
                 + TradeSize.ToString() + "', '"
-                + TradeSum.ToString() + "', '"
+                + TradeSum.ToString().Replace(",", ".") + "', '"
                 + iTradeClosed.ToString() + "', '" 
-                + Comission.ToString() + "', '" 
-                + Taxes.ToString() + "', '" 
-                + Profit.ToString() + "');";
+                + Comission.ToString().Replace(",", ".") + "', '" 
+                + Taxes.ToString().Replace(",", ".") + "', '" 
+                + Profit.ToString().Replace(",", ".") + "');";
 
             return query;
         }

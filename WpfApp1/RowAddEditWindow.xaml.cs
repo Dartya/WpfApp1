@@ -22,18 +22,25 @@ namespace WpfApp1
     /// </summary>
     public partial class RowAddEditWindow : Window
     {
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+([,][0-9]{1,3})");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void IntValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
+        
+        //глобальные переменные
         public string TitleString { get; set; }
         public Trade trade;
-        public string SelectedInstrumentClass { get; set; }
-        public string SelectedTradeType { get; set; }
 
         //параметры сделки
+        private int TradeId;
+        private int iInstrumentType = 0;
         private decimal Opening_price;
         private decimal Closing_price;
         private decimal Position_Volume;
@@ -45,15 +52,49 @@ namespace WpfApp1
         private decimal Profit;
         private int iSelectedTradeType = 0; //0 - Long, 1 - Short
 
+        //метод обновления данных объекта trade
+        private void updateTradeParams() {
+            trade.InstrumentName = instrument_name.Text;
+            trade.InstrumentType = iInstrumentType;
+            trade.Ticker = instrument_ticker.Text;
+            trade.TradeType = iSelectedTradeType;
+            trade.OpeningPrice = Opening_price;
+            trade.TradeSize = Trade_size;
+            trade.TradeSum = Position_Volume;
+            trade.TradeClosed = (bool)checkbox.IsChecked;
+            trade.Comission = Comissions;
+            trade.Taxes = Taxes;
+            trade.Profit = Profit;
+        }
+
         //метод вычисления суммы открытой позиции
         public void countPosition_volume() {
             if (opening_price.Text == null || opening_price.Text == "")
                 Opening_price = 0;
-            else Opening_price = decimal.Parse(opening_price.Text);
+            else {
+                try
+                {
+                    Opening_price = decimal.Parse(opening_price.Text);
+                }
+                catch (Exception exc) { //на случай, если будет введена точка вместо запятой:
+                    opening_price.Text = opening_price.Text.Remove(opening_price.Text.Length -1, 1) + ",";
+                    opening_price.CaretIndex = opening_price.Text.Length;
+                }
+            }
 
             if (trade_size.Text == null || trade_size.Text == "")
                 Trade_size = 0;
-            else Trade_size = int.Parse(trade_size.Text);
+            else {
+                try
+                {
+                    Trade_size = int.Parse(trade_size.Text);
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show("НЕВЕРНЫЙ ФОРМАТ ВВОДА!\n" + exc.ToString() + "\n используете цифры!");
+                    opening_price.Text = "";
+                }
+            }
 
             Position_Volume = Opening_price * Trade_size;
             position_volume.Content = Position_Volume.ToString();
@@ -65,6 +106,7 @@ namespace WpfApp1
                 countTaxes();
                 countProfit();
             }
+            updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
 
         private void Opening_price_TextChanged(object sender, TextChangedEventArgs e)
@@ -81,14 +123,36 @@ namespace WpfApp1
         public void countPosition_Volume_CloseSum() {
             if (closing_price.Text == null || closing_price.Text == "")
                 Closing_price = 0;
-            else Closing_price = decimal.Parse(closing_price.Text);
+            else {
+                try
+                {
+                    Closing_price = decimal.Parse(closing_price.Text);
+                }
+                catch (Exception exc)
+                { //на случай, если будет введена точка вместо запятой:
+                    closing_price.Text = closing_price.Text.Remove(closing_price.Text.Length - 1, 1) + ",";
+                    closing_price.CaretIndex = closing_price.Text.Length;
+                }
+            }
 
             if (trade_size.Text == null || trade_size.Text == "")
                 Trade_size = 0;
-            else Trade_size = int.Parse(trade_size.Text);
+            else
+            {
+                try
+                {
+                    Trade_size = int.Parse(trade_size.Text);
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show("НЕВЕРНЫЙ ФОРМАТ ВВОДА!\n" + exc.ToString() + "\n используете цифры!");
+                    opening_price.Text = "";
+                }
+            }
 
             Position_Volume_CloseSum = (Closing_price * Trade_size);
             closed_position_volume.Content = Position_Volume_CloseSum.ToString();
+            updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
 
         private void Closing_price_TextChanged(object sender, TextChangedEventArgs e)
@@ -99,6 +163,7 @@ namespace WpfApp1
                 countComissions();
                 countTaxes();
                 countProfit();
+                updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
             }
         }
 
@@ -112,6 +177,7 @@ namespace WpfApp1
                 else Comissions = 2m;
                 comissions.Content = Comissions.ToString();
             }
+            updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
 
         //метод вычисления налогов
@@ -127,6 +193,7 @@ namespace WpfApp1
                 else Taxes = 0;
             }
             taxes.Content = Taxes.ToString();
+            updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
 
         //метод вычисления профита
@@ -143,6 +210,7 @@ namespace WpfApp1
                     FinProfit.Content = Profit.ToString();
                 }
             }
+            updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
 
         //общий метод высиления всех указанных выше параметров
@@ -152,6 +220,7 @@ namespace WpfApp1
             countComissions();
             countTaxes();
             countProfit();
+            updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
 
         public RowAddEditWindow(string title)
@@ -160,14 +229,8 @@ namespace WpfApp1
             Title = title;
             InitializeComponent();
             closing_price.IsReadOnly = true;
-            comissions.Content = "0";
-            trade.Comission = 0;
 
-            taxes.Content = "0";
-            trade.Taxes = 0;
-
-            FinProfit.Content = "0";
-            trade.Profit = 0;
+            setParamsNull();
         }
 
         public RowAddEditWindow(string title, DataRowView row)
@@ -176,14 +239,8 @@ namespace WpfApp1
             Title = title;
             InitializeComponent();
             closing_price.IsReadOnly = true;
-            comissions.Content = "0";
-            trade.Comission = 0;
 
-            taxes.Content = "0";
-            trade.Taxes = 0;
-
-            FinProfit.Content = "0";
-            trade.Profit = 0;
+            setParamsNull();
         }
 
         public void enter_button(object sender, RoutedEventArgs e)
@@ -191,27 +248,26 @@ namespace WpfApp1
             this.DialogResult = true;
         }
 
-        private void Instrument_class_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void Instrument_class_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            string SelectedInstrumentClass;
             SelectedInstrumentClass = instrument_class.SelectedValue.ToString();
-            int iInstrumentClass = 0;
-
+            
             switch (SelectedInstrumentClass)
             {
                 case "System.Windows.Controls.ComboBoxItem: Валюта":
-                    iInstrumentClass = 0;
+                    iInstrumentType = 0;
                     break;
                 case "System.Windows.Controls.ComboBoxItem: Акция":
-                    iInstrumentClass = 1;
+                    iInstrumentType = 1;
                     break;
                 case "System.Windows.Controls.ComboBoxItem: Фьючерс":
-                    iInstrumentClass = 2;
+                    iInstrumentType = 2;
                     break;
             }
-            trade.InstrumentType = iInstrumentClass;
+            trade.InstrumentType = iInstrumentType;
         }
-        private void Trade_type_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void Trade_type_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            string SelectedTradeType;
             SelectedTradeType = trade_type.SelectedItem.ToString(); //КОСТЫЛЬ, когда будет время - исправить!
             //MessageBox.Show(SelectedTradeType);
 
@@ -225,20 +281,28 @@ namespace WpfApp1
                     countAll();
                     break;
             }
-
             trade.TradeType = iSelectedTradeType;
         }
 
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
+        private void CheckBox_Checked(object sender, RoutedEventArgs e) {
             closing_price.IsReadOnly = false;
-
         }
 
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e) {
             closing_price.IsReadOnly = true;
+            setParamsNull();
+        }
+
+        private void Instrument_name_TextChanged(object sender, TextChangedEventArgs e) {
+            trade.InstrumentName = instrument_name.Text;
+        }
+
+        private void Instrument_ticker_TextChanged(object sender, TextChangedEventArgs e) {
+            trade.Ticker = instrument_ticker.Text;
+        }
+
+        //метод обнуления параметров
+        private void setParamsNull() {
             closing_price.Text = "0";
 
             comissions.Content = "0";
@@ -249,16 +313,10 @@ namespace WpfApp1
 
             FinProfit.Content = "0";
             trade.Profit = 0;
-        }
 
-        private void Instrument_name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            trade.InstrumentName = instrument_name.Text;
-        }
-
-        private void Instrument_ticker_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            trade.Ticker = instrument_ticker.Text;
+            closed_position_volume.Content = "0";
+            Position_Volume_CloseSum = 0;
+            updateTradeParams(); //МЕТОД ОБНОВЛЕНИЯ ПАРАМЕТРОВ
         }
     }
 }
