@@ -91,28 +91,28 @@ namespace WpfApp1
 
         //метод получения данных из трейда
         private void getTradeData(DataRowView row) {
-            instrument_name.Text = row.Row.ItemArray[1].ToString();    //имя инструмента
+            instrument_name.Text = row.Row.ItemArray[1].ToString();     //имя инструмента
 
-            switch ((int)row.Row.ItemArray[2]) { //комбобокс класс инструмента
+            switch ((int)row.Row.ItemArray[2]) {                        //комбобокс класс инструмента
                 case 0:
-                    instrument_class.SelectedIndex = 0; //"Валюта"
+                    instrument_class.SelectedIndex = 0;                 //"Валюта"
                     break;
                 case 1:
-                    instrument_class.SelectedIndex = 1;//"Акция";
+                    instrument_class.SelectedIndex = 1;                 //"Акция";
                     break;
                 case 2:
-                    instrument_class.SelectedIndex = 2;// "Фьючерс";
+                    instrument_class.SelectedIndex = 2;                 // "Фьючерс";
                     break;
             }
 
-            instrument_ticker.Text = row.Row.ItemArray[3].ToString();  //тикер инструмента
+            instrument_ticker.Text = row.Row.ItemArray[3].ToString();   //тикер инструмента
 
-            switch ((int)row.Row.ItemArray[4]) { //комбобокс тип сделки
+            switch ((int)row.Row.ItemArray[4]) {                        //комбобокс тип сделки
                 case 0:
-                    trade_type.SelectedIndex = 0; //"Long";
+                    trade_type.SelectedIndex = 0;                       //"Long";
                     break;
                 case 1:
-                    trade_type.SelectedIndex = 1; //"Short";
+                    trade_type.SelectedIndex = 1;                       //"Short";
                     break;
             }
 

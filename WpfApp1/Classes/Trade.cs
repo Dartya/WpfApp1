@@ -50,30 +50,64 @@ namespace WpfApp1.Classes
         public Trade() {
             Schema = "tradesassistant";
             Table = "trade";
+
+            TradeId = 0;
+            InstrumentName = "";
+            InstrumentType = 0;
+            Ticker = "";
+            TradeType = 0;
+            OpeningPrice = 0;
+            TradeSize = 0;
+            TradeSum = 0;
+            TradeClosed = false;
+            ClosingPrice = 0;
+            Comission = 0;
+            Taxes = 0;
+            Profit = 0;
         }
 
         //конструктор с параметром выбранной строки
         public Trade(DataRowView row) {
             Schema = "tradesassistant";
-            Table = "trade";
+            Table = "trades";
+            if (row == null) {
+                MessageBox.Show("Выбранная строка не имеет данных!\nБудут присвоены нулевые значения параметрам трейда!");
 
-            this.row = row;
-            TradeId = int.Parse(row.Row.ItemArray[0].ToString());
-            InstrumentName = row.Row.ItemArray[1].ToString();
-            InstrumentType = int.Parse(row.Row.ItemArray[2].ToString());
-            Ticker = row.Row.ItemArray[3].ToString();
-            TradeType = int.Parse(row.Row.ItemArray[4].ToString());
-            OpeningPrice = decimal.Parse(row.Row.ItemArray[5].ToString());
-            TradeSize = int.Parse(row.Row.ItemArray[6].ToString());
-            TradeSum = decimal.Parse(row.Row.ItemArray[7].ToString());
+                TradeId = 0;
+                InstrumentName = "";
+                InstrumentType = 0;
+                Ticker = "";
+                TradeType = 0;
+                OpeningPrice = 0;
+                TradeSize = 0;
+                TradeSum = 0;
+                TradeClosed = false;
+                ClosingPrice = 0;
+                Comission = 0;
+                Taxes = 0;
+                Profit = 0;
+            }else {
+                this.row = row;
+                TradeId = int.Parse(row.Row.ItemArray[0].ToString());
+                InstrumentName = row.Row.ItemArray[1].ToString();
+                InstrumentType = int.Parse(row.Row.ItemArray[2].ToString());
+                Ticker = row.Row.ItemArray[3].ToString();
+                TradeType = int.Parse(row.Row.ItemArray[4].ToString());
+                OpeningPrice = decimal.Parse(row.Row.ItemArray[5].ToString());
+                TradeSize = int.Parse(row.Row.ItemArray[6].ToString());
+                TradeSum = decimal.Parse(row.Row.ItemArray[7].ToString());
 
-            TradeClosed = (bool)row.Row.ItemArray[8];
-            if (TradeClosed == true) {
-                TradeClosed = true;
-                ClosingPrice = decimal.Parse(row.Row.ItemArray[9].ToString());
-                Comission = decimal.Parse(row.Row.ItemArray[10].ToString());
-                Taxes = decimal.Parse(row.Row.ItemArray[11].ToString());
-                Profit = decimal.Parse(row.Row.ItemArray[12].ToString());
+                if (row.Row.ItemArray[8].ToString() == "")
+                    TradeClosed = false;
+                else
+                    TradeClosed = (bool)row.Row.ItemArray[8];
+                if (TradeClosed == true) {
+                    TradeClosed = true;
+                    ClosingPrice = decimal.Parse(row.Row.ItemArray[9].ToString());
+                    Comission = decimal.Parse(row.Row.ItemArray[10].ToString());
+                    Taxes = decimal.Parse(row.Row.ItemArray[11].ToString());
+                    Profit = decimal.Parse(row.Row.ItemArray[12].ToString());
+                }
             }
         }
 
@@ -150,8 +184,7 @@ namespace WpfApp1.Classes
         }
 
         public string DeleteQuery() {
-            string query = "";
-
+            string query = "DELETE FROM `" + Schema + "`.`" + Table + "` WHERE `id`= '" + row.Row.ItemArray[0].ToString() + "';";
             return query;
         }
     }

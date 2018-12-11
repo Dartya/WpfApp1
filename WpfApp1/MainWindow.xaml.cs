@@ -70,16 +70,45 @@ namespace WpfApp1
             refreshData();
         }
         //окно добавления записи в БД
-        private void AddMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            RowAddEditWindow win = new RowAddEditWindow("Добавление записи");
-            win.Owner = this;
-            if (win.ShowDialog() == true)
+        private void AddMenuItem_Click(object sender, RoutedEventArgs e) {
+            if (dtGrid.SelectedItem == null)
             {
+                RowAddEditWindow win = new RowAddEditWindow("Добавление записи");
+                win.Owner = this;
+                if (win.ShowDialog() == true)
+                {
+                    string query;
+                    win.trade.setDataBaseParams(dBconnection.DB, dBconnection.Table);
+                    query = win.trade.AddQuery();
+                    try
+                    {
+                        MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
+
+                        MySqlCommand cmdAddDB = new MySqlCommand(query, connection);
+                        //создание БД
+                        connection.Open();
+                        cmdAddDB.ExecuteNonQuery();
+                        connection.Close();
+
+                        MessageBox.Show("Запись добавлена");
+                    }
+                    catch (Exception exc)
+                    {
+                        MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
+                    }
+                    refreshData();
+                }
+            }
+            else if (dtGrid.SelectedItem != null) {
+                DataRowView row = dtGrid.SelectedItem as DataRowView;
+
+                Trade trade = new Trade(row);
+
                 string query;
-                win.trade.setDataBaseParams(dBconnection.DB, dBconnection.Table);
-                query = win.trade.AddQuery();
-                try {
+                trade.setDataBaseParams(dBconnection.DB, dBconnection.Table);
+                query = trade.AddQuery();
+                try
+                {
                     MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
                     MySqlCommand cmdAddDB = new MySqlCommand(query, connection);
@@ -89,7 +118,8 @@ namespace WpfApp1
                     connection.Close();
 
                     MessageBox.Show("Запись добавлена");
-                } catch (Exception exc)
+                }
+                catch (Exception exc)
                 {
                     MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
                 }
@@ -137,8 +167,8 @@ namespace WpfApp1
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM `"+dBconnection.DB+"`.`"+dBconnection.Table+"` WHERE `id`= '"+row.Row.ItemArray[0].ToString()+"';", connection);
-                MessageBox.Show(cmd.CommandText);
+                Trade trade = new Trade(row);
+                MySqlCommand cmd = new MySqlCommand(trade.DeleteQuery(), connection);
                 connection.Open();
                 cmd.ExecuteNonQuery();
                 connection.Close();
@@ -207,6 +237,7 @@ namespace WpfApp1
                 {
                     MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
                 }
+                refreshData();
             }
         }
 
@@ -216,7 +247,7 @@ namespace WpfApp1
             try
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
-
+                
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM `" + dBconnection.DB + "`.`" + dBconnection.Table + "`;", connection);
                 //MessageBox.Show(cmd.CommandText);
                 connection.Open();
