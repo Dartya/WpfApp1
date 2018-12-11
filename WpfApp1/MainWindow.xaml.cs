@@ -130,6 +130,10 @@ namespace WpfApp1
         private void EditMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DataRowView row = dtGrid.SelectedItem as DataRowView;
+            if (row == null) {
+                MessageBox.Show("Ошибка!\nНе выбрана запись! Выберите запись в таблице и повторите попытку.", "Ошибка");
+                return;
+            }
             RowAddEditWindow win = new RowAddEditWindow("Редактирование записи", row);
             win.Owner = this;
 
@@ -148,7 +152,7 @@ namespace WpfApp1
                     cmdAddDB.ExecuteNonQuery();
                     connection.Close();
 
-                    MessageBox.Show("Запись отредактирована");
+                    MessageBox.Show("Запись отредактирована", "ОК");
                 }
                 catch (Exception exc)
                 {
@@ -161,8 +165,11 @@ namespace WpfApp1
         private void DeleteMenuItem_Click(object sender, RoutedEventArgs e) { //метод удаляет выбранную запись по ее id
             //код, получающий выбранную строку
             DataRowView row = dtGrid.SelectedItem as DataRowView;
-            //пример запроса на удаление:
-            //DELETE FROM `tradesassistant`.`trades` WHERE `id`= '1';
+            if (row == null)
+            {
+                MessageBox.Show("Ошибка!\nНе выбрана запись! Выберите запись в таблице и повторите попытку.", "Ошибка");
+                return;
+            }
             try
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());

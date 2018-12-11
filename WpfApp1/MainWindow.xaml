@@ -104,20 +104,10 @@
                 Margin="5,30,5,5"
                  />
         <Label Grid.Column="0" Grid.Row="1"
-                Content="Валюта:" 
+                Content="Валюта: USD" 
                 Margin="5,50,5,5"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 />
-        <ComboBox HorizontalAlignment="Left"
-                Name="CurrencyChoiseBox"
-                Margin="5,75,0,0" 
-                Grid.Row="1" 
-                VerticalAlignment="Top" 
-                Width="120" SelectionChanged="ComboBox_SelectionChanged">
-            <ComboBoxItem IsSelected="True">RUB</ComboBoxItem>
-            <ComboBoxItem>USD</ComboBoxItem>
-            <ComboBoxItem>EUR</ComboBoxItem>
-        </ComboBox>
     </Grid>
 </Window>

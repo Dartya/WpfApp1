@@ -91,6 +91,7 @@
     <Compile Include="Classes\ETF.cs" />
     <Compile Include="Classes\FinInfo.cs" />
     <Compile Include="Classes\FinInstrument.cs" />
+    <Compile Include="Classes\RiskProfile.cs" />
     <Compile Include="Classes\Stock.cs" />
     <Compile Include="Classes\Trade.cs" />
     <Compile Include="DBConnectionSettings.xaml.cs">

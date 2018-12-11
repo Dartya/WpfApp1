@@ -5,11 +5,139 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Риск-профиль" Height="350" Width="450"
-        MinHeight="350 px"
-        MinWidth="450 px" 
-        WindowStartupLocation="CenterScreen">
+        Title="Риск-профиль" Height="320" Width="370"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" ></RowDefinition>
+            <RowDefinition Height="Auto" ></RowDefinition>
+            <RowDefinition Height="1*" ></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Параметры риска"
+                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Height="110" Width="355"
+                  Margin="5,5,5,5" 
+                  Grid.Row="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Мин. риск в сделке, %:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,0,0,0"/>
+                    <TextBox x:Name="min_Risk_inOneTrade"
+                        PreviewTextInput="DecimalValidationTextBox"
+                        Height="25" Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,0,0,0" 
+                        TextChanged="min_Risk_inOneTrade_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Макс. риск в сделке, %:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
+                    <TextBox x:Name="max_Risk_inOneTrade"
+                        PreviewTextInput="DecimalValidationTextBox"
+                        Height="25" Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0" 
+                        TextChanged="max_Risk_inOneTrade_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Макс. % от депозита на сделку:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
+                    <Label Name="maxPercentOfDeposit"
+                        Height="25" Width="150" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+            
+        </GroupBox>
+        <GroupBox Header="Параметры Профита"
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Height="110" Width="355"
+                  Margin="5,5,5,5" 
+                  Grid.Row="1" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Минимальный профит, %:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,0,0,0"/>
+                    <TextBox 
+                        Name="minProfitInOneTrade"
+                        PreviewTextInput="DecimalValidationTextBox"
+                        Height="25" Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,0,0,0" 
+                        TextChanged="minProfitInOneTrade_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Максимальный профит, %:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
+                    <TextBox 
+                        Name="maxProfitInOneTrade"
+                        PreviewTextInput="DecimalValidationTextBox"
+                        Height="25" Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0" 
+                        TextChanged="maxProfitInOneTrade_TextChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Отношение риска к профиту:" 
+                        Height="25" Width="185" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
+                    <Label Name="riskProfitRatio"
+                        Height="25" Width="150" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <Button Name="Enter"
+                IsDefault="True"
+                Content="Принять" 
+                ToolTip="Применить настройки подключения к БД" 
+                Grid.Row="3" Grid.Column="0" 
+                Width="100" 
+                Height="30"
+                MinWidth="80" MinHeight="30" 
+                MaxWidth="200" MaxHeight="300" 
+                Click="enter_button" 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
+
+        <Button Name="Cancel"
+                IsCancel="True"
+                Content="Отмена"
+                Grid.Row="3" Grid.Column="1" 
+                Height="30"
+                MinWidth="80" MinHeight="30" 
+                MaxWidth="200" MaxHeight="300"
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center" Width="100"/>
     </Grid>
 </Window>

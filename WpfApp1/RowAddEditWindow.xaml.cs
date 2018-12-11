@@ -204,7 +204,7 @@ namespace WpfApp1
                 }
                 catch (Exception exc)
                 {
-                    MessageBox.Show("НЕВЕРНЫЙ ФОРМАТ ВВОДА!\n" + exc.ToString() + "\n используете цифры!");
+                    MessageBox.Show("НЕВЕРНЫЙ ФОРМАТ ВВОДА!\n" + exc.ToString() + "\n используете цифры!", "ОШИБКА");
                     opening_price.Text = "";
                 }
             }
