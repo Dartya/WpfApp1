@@ -22,8 +22,8 @@ namespace WpfApp1.Classes
         public static double max_StopLoss_inOneTrade { get; set; } = 5;      //максимальный стоп-лосс, %
         public static double min_Persent_ofDeposit { get; set; } = 0;        //мин % от депозита в сделке
         public static double max_Persent_ofDeposit { get; set; } = 0;        //макс % от депозита в сделке
-        public static double min_Profit_inOneTrade { get; set; } = 0;        //мин профит в сделке, %
-        public static double max_Profit_inOneTrade { get; set; } = 0;        //макс профит в трейде, %
+        public static double min_Profit_inOneTrade { get; set; } = 3;        //мин профит в сделке, %
+        public static double max_Profit_inOneTrade { get; set; } = 5;        //макс профит в трейде, %
 
     }
 }

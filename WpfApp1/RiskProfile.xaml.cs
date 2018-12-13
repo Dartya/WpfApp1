@@ -22,48 +22,32 @@ namespace WpfApp1
     /// 
     public partial class RiskProfile : Window
     {
-        /*//пробую привязать строку
-        public static readonly DependencyProperty dpMin_Risk_inOneTrade = DependencyProperty.Register(
-            "t", 
-            typeof(string), 
-            typeof(MainWindow)
-            );
-
-        public string sMin_Risk_inOneTrade {
-            get { return (string)GetValue(dpMin_Risk_inOneTrade); }
-            set { SetValue(dpMin_Risk_inOneTrade, value); }
-        }*/
-
-        private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
+        private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e){
             Regex regex = new Regex("[^0-9]+([,][0-9]{1,3})");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        //риск
         double minRiskValue = 0.1;
         double maxRiskValue = 2;
         double minStopLoss = 0.5;
         double maxStopLoss = 5;
         double minPercent = 0;
         double maxPercent = 0;
+        //профит
+        double minProfit = 3;
+        double maxProfit = 5;
 
         public RiskProfile()
         {
             InitializeComponent();
-            /*
-            min_Risk_inOneTrade.Value = Classes.RiskProfile.min_RiskCapital_inOneTrade;
-            max_Risk_inOneTrade.Value = Classes.RiskProfile.max_RiskCapital_inOneTrade;
-            min_StopLoss.Value = Classes.RiskProfile.min_StopLoss_inOneTrade;
-            max_StopLoss.Value = Classes.RiskProfile.max_StopLoss_inOneTrade;
-            minProfitInOneTrade.Text = Classes.RiskProfile.min_Profit_inOneTrade.ToString();
-            maxProfitInOneTrade.Text = Classes.RiskProfile.max_Profit_inOneTrade.ToString();
-            minPercentOfDeposit.Content = Classes.RiskProfile.min_Persent_ofDeposit.ToString();
-            maxPercentOfDeposit.Content = Classes.RiskProfile.max_Persent_ofDeposit.ToString();*/
 
             minRiskValue = Classes.RiskProfile.min_RiskCapital_inOneTrade;
             maxRiskValue = Classes.RiskProfile.max_RiskCapital_inOneTrade;
             minStopLoss = Classes.RiskProfile.min_StopLoss_inOneTrade;
             maxStopLoss = Classes.RiskProfile.max_StopLoss_inOneTrade;
+            minProfit = Classes.RiskProfile.min_Profit_inOneTrade;
+            maxProfit = Classes.RiskProfile.max_Profit_inOneTrade;
 
             countPercents();
 
@@ -71,6 +55,8 @@ namespace WpfApp1
             max_Risk_inOneTrade.Value = maxRiskValue;
             min_StopLoss.Value = minStopLoss;
             max_StopLoss.Value = maxStopLoss;
+            minProfitInOneTrade.Text = minProfit.ToString();
+            maxProfitInOneTrade.Text = maxProfit.ToString();
         }
 
         private void enter_button(object sender, RoutedEventArgs e)
@@ -89,25 +75,46 @@ namespace WpfApp1
                  Classes.RiskProfile.max_Profit_inOneTrade = maxPercent;
                  Classes.RiskProfile.min_StopLoss_inOneTrade = min_StopLoss.Value;
                  Classes.RiskProfile.max_StopLoss_inOneTrade = max_StopLoss.Value;
+                 Classes.RiskProfile.min_Profit_inOneTrade = double.Parse(minProfitInOneTrade.Text);
+                 Classes.RiskProfile.max_Profit_inOneTrade = double.Parse(maxProfitInOneTrade.Text);
             }
 
             this.DialogResult = true;
         }
 
-        private void min_Risk_inOneTrade_TextChanged(object sender, TextChangedEventArgs e) {
-            
-        }
-
-        private void max_Risk_inOneTrade_TextChanged(object sender, TextChangedEventArgs e) {
-
-        }
-
         private void minProfitInOneTrade_TextChanged(object sender, TextChangedEventArgs e) {
-
+            try {
+                if (double.Parse(minProfitInOneTrade.Text) > maxProfit)
+                {
+                    MessageBox.Show("Значение минимального уровня take profit должно быть меньше максимального уровня take profit!", "Ошибка!");
+                    minProfitInOneTrade.Text = minProfit.ToString();
+                    return;
+                }
+                else
+                    minProfit = double.Parse(minProfitInOneTrade.Text);
+            }
+            catch (Exception exc) {
+                MessageBox.Show("Введите корректное значение!", "Ошибка!");
+                minProfitInOneTrade.Text = minProfit.ToString();
+                return;
+            }
         }
 
         private void maxProfitInOneTrade_TextChanged(object sender, TextChangedEventArgs e) {
-
+            try {
+                if (double.Parse(maxProfitInOneTrade.Text) < minProfit)
+                {
+                    MessageBox.Show("Значение минимального уровня take profit должно быть меньше максимального уровня take profit!", "Ошибка!");
+                    maxProfitInOneTrade.Text = maxProfit.ToString();
+                    return;
+                }
+                else
+                    maxProfit = double.Parse(maxProfitInOneTrade.Text);
+            } catch (Exception exc) {
+                MessageBox.Show("Введите корректное значение!", "Ошибка!");
+                maxProfitInOneTrade.Text = maxProfit.ToString();
+                return;
+            }
         }
 
         private void min_Risk_inOneTrade_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
