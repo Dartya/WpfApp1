@@ -87,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CalculatorWindow.xaml.cs">
+      <DependentUpon>CalculatorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Classes\Currency.cs" />
     <Compile Include="Classes\ETF.cs" />
     <Compile Include="Classes\FinInfo.cs" />
@@ -106,6 +109,10 @@
     <Compile Include="RowAddEditWindow.xaml.cs">
       <DependentUpon>RowAddEditWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="CalculatorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DBConnectionSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
