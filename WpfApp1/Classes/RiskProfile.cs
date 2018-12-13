@@ -9,13 +9,21 @@ namespace WpfApp1.Classes
     [Serializable]
     public static class RiskProfile
     {
-        public static float min_RiskCapital_inOneTrade { get; set; }    //мин риск в сделке, %
-        public static float max_RiskCapital_inOneTrade { get; set; }    //макс риск в сделке, %
-        public static float max_Persent_ofDeposit { get; set; }         //макс % от депозита в сделке
-        public static float min_Profit_inOneTrade { get; set; }         //мин профит в сделке, %
-        public static float max_Profit_inOneTrade { get; set; }         //макс профит в трейде, %
-        public static string RiskProfit_Ratio { get; set; }             //соотношение риска к профиту, рекомендуется 1:3
+        //константы 
+        public const double MINRISK = 0.1;      //минимальное значение риска капиталом
+        public const double MAXRISK = 2;         //максимальное значение риска капиталом
+        public const double MINSTOPLOSS = 0.5;  //минимальное значение стопа
+        public const double MASXTOPLOSS = 5;     //максимальное значение стопа
 
+        //поля
+        public static double min_RiskCapital_inOneTrade { get; set; } = 0.1; //мин риск в сделке, %
+        public static double max_RiskCapital_inOneTrade { get; set; } = 2;   //макс риск в сделке, %
+        public static double min_StopLoss_inOneTrade { get; set; } = 0.5;    //минимальный стоп-лосс, %
+        public static double max_StopLoss_inOneTrade { get; set; } = 5;      //максимальный стоп-лосс, %
+        public static double min_Persent_ofDeposit { get; set; } = 0;        //мин % от депозита в сделке
+        public static double max_Persent_ofDeposit { get; set; } = 0;        //макс % от депозита в сделке
+        public static double min_Profit_inOneTrade { get; set; } = 0;        //мин профит в сделке, %
+        public static double max_Profit_inOneTrade { get; set; } = 0;        //макс профит в трейде, %
 
     }
 }
