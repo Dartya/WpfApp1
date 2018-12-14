@@ -69,10 +69,8 @@ namespace WpfApp1
             else {
                  Classes.RiskProfile.min_RiskCapital_inOneTrade = min_Risk_inOneTrade.Value;
                  Classes.RiskProfile.max_RiskCapital_inOneTrade = max_Risk_inOneTrade.Value;
-                 Classes.RiskProfile.min_Persent_ofDeposit = max_StopLoss.Value;
+                 Classes.RiskProfile.min_Persent_ofDeposit = minPercent;
                  Classes.RiskProfile.max_Persent_ofDeposit = maxPercent;
-                 Classes.RiskProfile.min_Profit_inOneTrade = minPercent;
-                 Classes.RiskProfile.max_Profit_inOneTrade = maxPercent;
                  Classes.RiskProfile.min_StopLoss_inOneTrade = min_StopLoss.Value;
                  Classes.RiskProfile.max_StopLoss_inOneTrade = max_StopLoss.Value;
                  Classes.RiskProfile.min_Profit_inOneTrade = double.Parse(minProfitInOneTrade.Text);

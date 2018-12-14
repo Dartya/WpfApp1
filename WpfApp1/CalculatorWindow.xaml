@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Height="400" Width="550"
+        Height="520" Width="550"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="CalculatorWindow">
@@ -29,31 +29,42 @@
                 Margin="5,5,5,5"
                 />
             <TextBox 
+                PreviewTextInput="DecimalValidationTextBox"
+                
+                Name="PriceTextBox"
                 Height="25" Width="130" 
-                TextAlignment="Left"
+                TextAlignment="Center"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Margin="5,5,5,5" 
-                TextChanged="Instrument_name_TextChanged"/>
+                TextChanged="TextBox_TextChanged"/>
             <Label Content="Депозит:" 
                 Height="25" Width="60" 
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="5,5,5,5"
                 />
-            <Label Content="" 
+            <Label Name="DepositLable" 
                 Height="25" Width="150" 
+                HorizontalContentAlignment="Center"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="5,5,5,5"
                 BorderBrush="DarkGray"
                 BorderThickness="1"
                 />
+            <StackPanel Orientation="Vertical"
+                        Margin="10,0,0,0">
+                <RadioButton GroupName="TradeType" Content="Long" IsChecked="True" Checked="RadioButton_Checked" />
+                <RadioButton GroupName="TradeType" Content="Short" Checked="RadioButton_Checked"/>
+            </StackPanel>
         </StackPanel>
         <GroupBox Header="Параметры сделки" 
                   HorizontalAlignment="Left" VerticalAlignment="Top"
-                  Height="260" Width="535"
+                  Height="380" Width="535"
                   Margin="5,5,5,5" 
+                  BorderBrush="DarkGray"
+                  BorderThickness="1"
                   Grid.Row="1" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
@@ -69,7 +80,7 @@
                         Margin="140,5,5,5"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Процент, %:" 
+                    <Label Content="" 
                         Height="30" Width="100" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -79,7 +90,12 @@
                         Margin="5,5,5,5"/>
                     <Slider Name="stoploss"
                         Height="30" Width="115"
-                        Margin="5,5,5,5"/>
+                        Margin="5,5,5,5"
+                        IsSnapToTickEnabled="True"
+                        AutoToolTipPlacement="BottomRight"
+                        AutoToolTipPrecision="2" 
+                        ValueChanged="stoploss_ValueChanged"
+                            />
                     <Label Name="maxstop"
                         Height="30" Width="30"
                         Margin="5,5,5,5"/>
@@ -88,18 +104,24 @@
                         Margin="5,5,5,5"/>
                     <Slider Name="takeprofit"
                         Height="30" Width="115"
-                        Margin="5,5,5,5"/>
+                        Margin="5,5,5,5"
+                            IsSnapToTickEnabled="True"
+                        AutoToolTipPlacement="BottomRight"
+                        AutoToolTipPrecision="2" 
+                        ValueChanged="takeprofit_ValueChanged"/>
                     <Label Name="maxtake"
                         Height="30" Width="30"
                         Margin="5,5,5,5"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Цена:" 
+                    <Label Content="Процент, %:" 
                         Height="30" Width="100" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Margin="5,5,5,5"/>
-                    <Label Name="priceStopLoss" 
+                    <Label Name="percentStopLoss"
+                        Content="{Binding ElementName=stoploss, Path=Value}"
+                        HorizontalContentAlignment="Center"
                         Height="30" Width="115" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -107,7 +129,9 @@
                         BorderThickness="1"
                         Margin="44,5,5,5">
                     </Label>
-                    <Label Name="priceTakeProfit"
+                    <Label Name="percentTakeProfit"
+                        Content="{Binding ElementName=takeprofit, Path=Value}"
+                        HorizontalContentAlignment="Center"
                         Height="30" Width="115" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -116,35 +140,30 @@
                         Margin="86,5,5,5">
                     </Label>
                 </StackPanel>
-                <Separator />
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Объем позиции, шт:" 
-                        Height="30" Width="125" 
+                    <Label Content="Цена:" 
+                        Height="30" Width="100" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Margin="5,5,5,5"/>
-                    <Label Name="volume" 
+                    <Label Name="priceStopLossLabel" 
+                        HorizontalContentAlignment="Center"
                         Height="30" Width="115" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         BorderBrush="DarkGray"
                         BorderThickness="1"
-                        Margin="19,5,5,5">
+                        Margin="44,5,5,5"
+                        >
                     </Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Сумма позиции:" 
-                        Height="30" Width="125" 
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Margin="5,5,5,5"/>
-                    <Label Name="sumPosition" 
+                    <Label Name="priceTakeProfitLabel"
+                        HorizontalContentAlignment="Center"
                         Height="30" Width="115" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         BorderBrush="DarkGray"
                         BorderThickness="1"
-                        Margin="19,5,5,5">
+                        Margin="86,5,5,5">
                     </Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
@@ -154,6 +173,47 @@
                         VerticalAlignment="Top"
                         Margin="5,5,5,5"/>
                     <Label Name="ratio" 
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Margin="121,5,5,5">
+                    </Label>
+                </StackPanel>
+                <Separator />
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Риск капиталом" 
+                        Height="30" Width="125" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="5,5,5,5"/>
+                    <Label 
+                        Content="Минимум"
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="19,5,5,5">
+                    </Label>
+                    <Label 
+                        Content="Максимум"
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="87,5,5,5">
+                    </Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Объем позиции, шт:" 
+                        Height="30" Width="125" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="5,5,5,5"/>
+                    <Label Name="volumeMin" 
+                        HorizontalContentAlignment="Center"
                         Height="30" Width="115" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -161,30 +221,77 @@
                         BorderThickness="1"
                         Margin="19,5,5,5">
                     </Label>
+                    <Label Name="volumeMax"
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Margin="87,5,5,5">
+                    </Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Сумма позиции:" 
+                        Height="30" Width="125" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="5,5,5,5"/>
+                    <Label Name="sumPositionMin" 
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Margin="19,5,5,5">
+                    </Label>
+                    <Label Name="sumPositionMax" 
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Margin="87,5,5,5">
+                    </Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Комиссия:" 
+                        Height="30" Width="125" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="5,5,5,5"/>
+                    <Label Name="minComissionLabel"
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Margin="19,5,5,5">
+                    </Label>
+                    <Label Name="maxComissionLabel" 
+                        HorizontalContentAlignment="Center"
+                        Height="30" Width="115" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        Margin="87,5,5,5">
+                    </Label>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <Button Name="Enter"
-                IsDefault="True"
-                Content="Принять" 
-                ToolTip="Применить настройки подключения к БД" 
-                Grid.Row="3" Grid.Column="0" 
-                Width="100" 
-                Height="30"
-                MinWidth="80" MinHeight="30" 
-                MaxWidth="200" MaxHeight="300" 
-                Click="enter_button" 
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"/>
-
-        <Button Name="Cancel"
+        <Button Name="close"
                 IsCancel="True"
-                Content="Отмена"
-                Grid.Row="3" Grid.Column="1" 
+                Content="Закрыть"
+                Grid.Row="3"
                 Height="30"
                 MinWidth="80" MinHeight="30" 
                 MaxWidth="200" MaxHeight="300"
                 VerticalAlignment="Center" 
-                HorizontalAlignment="Center" Width="100"/>
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Center" Width="100" Click="close_Click"/>
     </Grid>
 </Window>

@@ -142,6 +142,7 @@
                         VerticalAlignment="Top"
                         Margin="0,5,0,0"/>
                     <Label Name="minPercentOfDeposit"
+                        HorizontalContentAlignment="Center"
                         Height="25" Width="150" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -154,6 +155,7 @@
                         VerticalAlignment="Top"
                         Margin="0,5,0,0"/>
                     <Label Name="maxPercentOfDeposit"
+                        HorizontalContentAlignment="Center"
                         Height="25" Width="150" 
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -176,6 +178,8 @@
                         Margin="0,0,0,0"/>
                     <TextBox 
                         Name="minProfitInOneTrade"
+                        TextAlignment="Center"
+                        VerticalContentAlignment="Center"
                         PreviewTextInput="DecimalValidationTextBox"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"
@@ -191,6 +195,8 @@
                         Margin="0,5,0,0"/>
                     <TextBox 
                         Name="maxProfitInOneTrade"
+                        TextAlignment="Center"
+                        VerticalContentAlignment="Center"
                         PreviewTextInput="DecimalValidationTextBox"
                         Height="25" Width="150"
                         HorizontalAlignment="Right"

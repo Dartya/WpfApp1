@@ -7,7 +7,7 @@
         ResizeMode="NoResize"
         mc:Ignorable="d"
         Title="Настройки подключения к БД" Height="250" Width="200"
-        MinHeight="260 px"
+        MinHeight="280 px"
         MinWidth="300 px" 
         WindowStartupLocation="CenterScreen">
     <Grid ShowGridLines="False">

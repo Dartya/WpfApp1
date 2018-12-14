@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using System.Data;
 using WpfApp1.Classes;
+using System.Text.RegularExpressions;
 
 namespace WpfApp1
 {
@@ -25,6 +26,11 @@ namespace WpfApp1
     {
         DBconnection dBconnection; //= new DBconnection("localhost", "tradesassistant", "root", "123456");
 
+        private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+([,][0-9]{1,3})");
+            e.Handled = regex.IsMatch(e.Text);
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -52,7 +58,9 @@ namespace WpfApp1
 
         private void PositionCalculator_Click(object sender, RoutedEventArgs e)
         {
-
+            CalculatorWindow win = new CalculatorWindow(decimal.Parse(DepositTexxtBox.Text));
+            win.Owner = this;
+            win.Show();
         }
         //окно справочной информации о функциях программы
         private void Manual_Click(object sender, RoutedEventArgs e)
