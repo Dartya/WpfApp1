@@ -235,22 +235,63 @@ namespace WpfApp1
                     dBconnection.Table = win.Table; //костыль, работает, не трогай!
                     MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
 
+                    //создание бд
                     MySqlCommand cmdCreateDB = new MySqlCommand(win.CreateDB(), connection);
+                    //таблица типов финансовых инструментов
+                    MySqlCommand cmdCreateInstrumentTypeTable = new MySqlCommand(win.CreateInstrumentTypeTable(), connection);
+                    MySqlCommand cmdCreateITRow1 = new MySqlCommand(win.CreateRowInstrumentType1(), connection);
+                    MySqlCommand cmdCreateITRow2 = new MySqlCommand(win.CreateRowInstrumentType2(), connection);
+                    MySqlCommand cmdCreateITRow3 = new MySqlCommand(win.CreateRowInstrumentType3(), connection);
+
+                    //таблица типов сделок
+                    MySqlCommand cmdCreateTradeTypeTable = new MySqlCommand(win.CreateTradeTypeTable(), connection);
+                    MySqlCommand cmdCreateTTrow1 = new MySqlCommand(win.CreateTradeTypeRow1(), connection);
+                    MySqlCommand cmdCreateTTrow2 = new MySqlCommand(win.CreateTradeTypeRow2(), connection);
+
+                    //таблица записей
                     MySqlCommand cmdCreateTable = new MySqlCommand(win.CreateTable(), connection);
                     //создание БД
                     connection.Open();
                     cmdCreateDB.ExecuteNonQuery();
                     connection.Close();
-                    //создание таблицы
+
+                    //создание таблицы типов финансовых инструментов
+                    connection.Open();
+                    cmdCreateInstrumentTypeTable.ExecuteNonQuery();
+                    connection.Close();
+                    //добавление записей в таблицу выше
+                    connection.Open();
+                    cmdCreateITRow1.ExecuteNonQuery();
+                    connection.Close();
+                    connection.Open();
+                    cmdCreateITRow2.ExecuteNonQuery();
+                    connection.Close();
+                    connection.Open();
+                    cmdCreateITRow3.ExecuteNonQuery();
+                    connection.Close();
+
+                    //создание таблицы типов сделок
+                    connection.Open();
+                    cmdCreateTradeTypeTable.ExecuteNonQuery();
+                    connection.Close();
+                    //заполнение таблицы выше
+                    connection.Open();
+                    cmdCreateTTrow1.ExecuteNonQuery();
+                    connection.Close();
+                    connection.Open();
+                    cmdCreateTTrow2.ExecuteNonQuery();
+                    connection.Close();
+
+                    //создание основной таблицы 
                     connection.Open();
                     cmdCreateTable.ExecuteNonQuery();
                     connection.Close();
-                    MessageBox.Show("База данных "+ win.Schema +" и таблица "+ win.Table + " успешно созданы.");
+                    MessageBox.Show("База данных "+ win.Schema +" и таблица "+ win.Table + " успешно созданы.", "Успех[");
                     dBconnection.setParams(win.Schema, win.Table); //обновление подключения
                 }
             catch (Exception exc)
                 {
-                    MessageBox.Show("НЕУДАЧА!\n" + exc.ToString());
+                    MessageBox.Show("НЕУДАЧА!\n" + exc.ToString(), "Ошибка!");
                 }
                 refreshData();
             }
@@ -262,8 +303,24 @@ namespace WpfApp1
             try
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
-                
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM `" + dBconnection.DB + "`.`" + dBconnection.Table + "`;", connection);
+                string command = "SELECT `"+dBconnection.DB+"`.`"+ dBconnection.Table+ "`.`id` AS `№ п/п`, " +
+                    "`tradesassistant`.`trades`.`instrument_name` AS `Имя инструмента`, " +
+                    "`tradesassistant`.`instrument_type`.`instrumenttype` AS `Класс инструмента`, " +
+                    "`tradesassistant`.`trades`.`instrument_ticker` AS `Тикер инструмента`," +
+                    " `tradesassistant`.`trade_types`.`tradetype` AS `Тип сделки`, " +
+                    "`tradesassistant`.`trades`.`opening_price` AS `Цена открытия`, " +
+                    "`tradesassistant`.`trades`.`trade_volume` AS `Объем позиции`, " +
+                    "`tradesassistant`.`trades`.`trade_sum` AS `Сумма позиции`,	" +
+                    "`tradesassistant`.`trades`.`trade_closed` AS `Сделка закрыта`,	" +
+                    "`tradesassistant`.`trades`.`closing_price` AS `Цена закрытия`, " +
+                    "`tradesassistant`.`trades`.`taxes` AS `Налог`, " +
+                    "`tradesassistant`.`trades`.`comissions` AS `Комиссия`, " +
+                    "`tradesassistant`.`trades`.`profit` AS `Финансовый результат` " +
+                    "FROM `tradesassistant`.`trades` " +
+                    "JOIN `tradesassistant`.`instrument_type` ON `tradesassistant`.`trades`.`instrument_class` = `tradesassistant`.`instrument_type`.`id` " +
+                    "JOIN `tradesassistant`.`trade_types` ON `tradesassistant`.`trades`.`trade_type` = `tradesassistant`.`trade_types`.`id` " +
+                    "ORDER BY `tradesassistant`.`trades`.`id`;";
+                MySqlCommand cmd = new MySqlCommand(command, connection);
                 //MessageBox.Show(cmd.CommandText);
                 connection.Open();
                 DataTable dt = new DataTable();
