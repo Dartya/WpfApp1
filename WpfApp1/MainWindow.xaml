@@ -24,14 +24,6 @@
         <Menu Name="menuTop" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
                 <MenuItem Header="Создать БД" Name="NewDB" Click="NewDB_Click"></MenuItem>
-                <MenuItem Header="Сохранить журнал в..." Name="Open">
-                <MenuItem Header="JSON" Name="JSON" Click="JSON_Click"></MenuItem>
-                <MenuItem Header="XML" Name="XML" Click="XML_Click"></MenuItem>
-                <MenuItem Header="Excel" Name="Excel" Click="Excel_Click"></MenuItem>
-                </MenuItem>
-                <MenuItem Header="Сохранить профиль" Name="saveProfile" Click="SaveProfile_Click"></MenuItem>
-                <Separator />
-                <MenuItem Header="Загрузить профиль" Name="loadProfile" Click="LoadProfile_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="Правка">
                 <MenuItem Name="RefreshMenuItem" Header="Обновить" Click="RefreshMenuItem_Click"></MenuItem>
@@ -45,10 +37,6 @@
             <MenuItem Header="Настройки">
                 <MenuItem Name="RiskSettings" Header="Риск-профиль" Click="RiskSettings_Click"></MenuItem>
                 <MenuItem Name="DBSettings" Header="Настройки БД" Click="DBSettings_Click"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Справка">
-                <MenuItem Name="Manual" Header="Просмотр справки" Click="Manual_Click"></MenuItem>
-                <MenuItem Name="About" Header="О программе" Click="About_Click"></MenuItem>
             </MenuItem>
         </Menu>
         <Button Name="button1"

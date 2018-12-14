@@ -194,36 +194,7 @@ namespace WpfApp1
             }
             refreshData();
         }
-        
-        private void JSON_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        private void XML_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SaveProfile_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void LoadProfile_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Excel_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
         //создание новой БД
         private void NewDB_Click(object sender, RoutedEventArgs e)
         {
@@ -303,7 +274,7 @@ namespace WpfApp1
             try
             {
                 MySqlConnection connection = new MySqlConnection(dBconnection.makeConnectionString());
-                string command = "SELECT `"+dBconnection.DB+"`.`"+ dBconnection.Table+ "`.`id` AS `№ п/п`, " +
+                string command = "SELECT `"+dBconnection.DB+"`.`"+ dBconnection.Table+ "`.`id` AS `id`, " +
                     "`tradesassistant`.`trades`.`instrument_name` AS `Имя инструмента`, " +
                     "`tradesassistant`.`instrument_type`.`instrumenttype` AS `Класс инструмента`, " +
                     "`tradesassistant`.`trades`.`instrument_ticker` AS `Тикер инструмента`," +

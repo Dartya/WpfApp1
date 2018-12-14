@@ -21,9 +21,9 @@ namespace WpfApp1.Classes
         //свойства трейда
         public int TradeId { get; set; }
         public string InstrumentName { get; set; }
-        public int InstrumentType { get; set; }
+        public string InstrumentType { get; set; }
         public string Ticker { get; set; }
-        public int TradeType { get; set; }
+        public string TradeType { get; set; }
         public decimal OpeningPrice { get; set; }
         public int TradeSize { get; set; }
         public decimal TradeSum { get; set; }
@@ -53,9 +53,9 @@ namespace WpfApp1.Classes
 
             TradeId = 0;
             InstrumentName = "";
-            InstrumentType = 0;
+            InstrumentType = "Валюта";
             Ticker = "";
-            TradeType = 0;
+            TradeType = "Long";
             OpeningPrice = 0;
             TradeSize = 0;
             TradeSum = 0;
@@ -75,9 +75,9 @@ namespace WpfApp1.Classes
 
                 TradeId = 0;
                 InstrumentName = "";
-                InstrumentType = 0;
+                InstrumentType = "Валюта";
                 Ticker = "";
-                TradeType = 0;
+                TradeType = "Long";
                 OpeningPrice = 0;
                 TradeSize = 0;
                 TradeSum = 0;
@@ -90,9 +90,9 @@ namespace WpfApp1.Classes
                 this.row = row;
                 TradeId = int.Parse(row.Row.ItemArray[0].ToString());
                 InstrumentName = row.Row.ItemArray[1].ToString();
-                InstrumentType = int.Parse(row.Row.ItemArray[2].ToString());
+                InstrumentType = row.Row.ItemArray[2].ToString();
                 Ticker = row.Row.ItemArray[3].ToString();
-                TradeType = int.Parse(row.Row.ItemArray[4].ToString());
+                TradeType = row.Row.ItemArray[4].ToString();
                 OpeningPrice = decimal.Parse(row.Row.ItemArray[5].ToString());
                 TradeSize = int.Parse(row.Row.ItemArray[6].ToString());
                 TradeSum = decimal.Parse(row.Row.ItemArray[7].ToString());
@@ -122,6 +122,32 @@ namespace WpfApp1.Classes
             roundParams();
             int iTradeClosed = 0;
             if (TradeClosed == false) iTradeClosed = 0; else iTradeClosed = 1;
+
+            int iTradeType = 0;
+            int iInstrumentType = 0;
+
+            switch (InstrumentType.ToString())
+            {
+                case "Валюта":
+                    iInstrumentType = 0;
+                    break;
+                case "Акция":
+                    iInstrumentType = 1;
+                    break;
+                case "Фьючерс":
+                    iInstrumentType = 2;
+                    break;
+            }
+            switch (TradeType.ToString())
+            {
+                case "Long":
+                    iTradeType = 0;
+                    break;
+                case "Short":
+                    iTradeType = 1;
+                    break;
+            }
+
             string query = "INSERT INTO `"+Schema+"`.`"+Table+"` " +
                 "(`instrument_name`, " +
                 "`instrument_class`, " +
@@ -137,9 +163,9 @@ namespace WpfApp1.Classes
                 "`profit`) " +
                 "VALUES ('"+
                 InstrumentName+ "', '"
-                +InstrumentType.ToString() +"', '"
+                + iInstrumentType.ToString() +"', '"
                 +Ticker+ "', '"
-                +TradeType.ToString() + "', '"
+                + iTradeType.ToString() + "', '"
                 + OpeningPrice.ToString().Replace(",", ".") + "', '"
                 + TradeSize.ToString() + "', '"
                 + TradeSum.ToString().Replace(",", ".") + "', '"
@@ -164,12 +190,36 @@ namespace WpfApp1.Classes
             }
             else iTradeClosed = 1;
 
+            int iTradeType = 0;
+            int iInstrumentType = 0;
+
+            switch (InstrumentType.ToString()) {
+                case "Валюта":
+                    iInstrumentType = 0;
+                    break;
+                case "Акция":
+                    iInstrumentType = 1;
+                    break;
+                case "Фьючерс":
+                    iInstrumentType = 2;
+                    break;
+            }
+            switch (TradeType.ToString())
+            {
+                case "Long":
+                    iTradeType = 0;
+                    break;
+                case "Short":
+                    iTradeType = 1;
+                    break;
+            }
+
             //UPDATE `tradesassistant`.`trades` SET `trade_type`='0', `trade_sum`='2120.00' WHERE `id`='6';
             string query = "UPDATE `" + Schema + "`.`" + Table + "` SET " +
                 "`instrument_name`='" + InstrumentName + "', " +
-                "`instrument_class`='" + InstrumentType.ToString() + "', " +
+                "`instrument_class`='" + iInstrumentType.ToString() + "', " +
                 "`instrument_ticker`='" + Ticker + "', " +
-                "`trade_type`='" + TradeType.ToString() + "', " +
+                "`trade_type`='" + iTradeType.ToString() + "', " +
                 "`opening_price`='" + OpeningPrice.ToString().Replace(",", ".") + "', " +
                 "`trade_volume`='" + TradeSize.ToString() + "', " +
                 "`trade_sum`='" + TradeSum.ToString().Replace(",", ".") + "', " +

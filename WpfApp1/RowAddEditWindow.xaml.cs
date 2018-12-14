@@ -40,7 +40,7 @@ namespace WpfApp1
 
         //параметры сделки
         private int TradeId;
-        private int iInstrumentType = 0;
+        private string iInstrumentType = "Валюта";
         private decimal Opening_price;
         private decimal Closing_price;
         private decimal Position_Volume;
@@ -50,7 +50,7 @@ namespace WpfApp1
         private decimal Taxes;
         private decimal Comissions = 2m;
         private decimal Profit;
-        private int iSelectedTradeType = 0; //0 - Long, 1 - Short
+        private string iSelectedTradeType = "Long"; //0 - Long, 1 - Short
 
         //конструктор экрана добавления записи
         public RowAddEditWindow(string title)
@@ -93,25 +93,25 @@ namespace WpfApp1
         private void getTradeData(DataRowView row) {
             instrument_name.Text = row.Row.ItemArray[1].ToString();     //имя инструмента
 
-            switch ((int)row.Row.ItemArray[2]) {                        //комбобокс класс инструмента
-                case 0:
+            switch (row.Row.ItemArray[2].ToString()) {                        //комбобокс класс инструмента
+                case "Валюта":
                     instrument_class.SelectedIndex = 0;                 //"Валюта"
                     break;
-                case 1:
+                case "Акция":
                     instrument_class.SelectedIndex = 1;                 //"Акция";
                     break;
-                case 2:
+                case "Фьючерс":
                     instrument_class.SelectedIndex = 2;                 // "Фьючерс";
                     break;
             }
 
             instrument_ticker.Text = row.Row.ItemArray[3].ToString();   //тикер инструмента
 
-            switch ((int)row.Row.ItemArray[4]) {                        //комбобокс тип сделки
-                case 0:
+            switch (row.Row.ItemArray[4].ToString()) {                        //комбобокс тип сделки
+                case "Long":
                     trade_type.SelectedIndex = 0;                       //"Long";
                     break;
-                case 1:
+                case "Short":
                     trade_type.SelectedIndex = 1;                       //"Short";
                     break;
             }
@@ -241,12 +241,12 @@ namespace WpfApp1
 
         //метод вычисления налогов
         public void countTaxes() {
-            if (iSelectedTradeType == 0) {
+            if (iSelectedTradeType == "Long") {
                 if (Position_Volume_CloseSum - Position_Volume > 0)
                     Taxes = (Position_Volume_CloseSum - Position_Volume) * TAX;
                 else Taxes = 0;
             }
-            else if (iSelectedTradeType == 1) {
+            else if (iSelectedTradeType == "Short") {
                 if (Position_Volume - Position_Volume_CloseSum > 0)
                     Taxes = (Position_Volume - Position_Volume_CloseSum) * TAX;
                 else Taxes = 0;
@@ -258,12 +258,12 @@ namespace WpfApp1
         //метод вычисления профита
         public void countProfit() {
             if (checkbox.IsChecked == true) {
-                if (iSelectedTradeType == 0)
+                if (iSelectedTradeType == "Long")
                 {
                     Profit = Position_Volume_CloseSum - Position_Volume - Taxes - Comissions;
                     FinProfit.Content = Profit.ToString();
                 }
-                else if (iSelectedTradeType == 1)
+                else if (iSelectedTradeType == "Short")
                 {
                     Profit = Position_Volume - Position_Volume_CloseSum - Taxes - Comissions;
                     FinProfit.Content = Profit.ToString();
@@ -294,13 +294,13 @@ namespace WpfApp1
             switch (SelectedInstrumentClass)
             {
                 case "System.Windows.Controls.ComboBoxItem: Валюта":
-                    iInstrumentType = 0;
+                    iInstrumentType = "Валюта";
                     break;
                 case "System.Windows.Controls.ComboBoxItem: Акция":
-                    iInstrumentType = 1;
+                    iInstrumentType = "Акция";
                     break;
                 case "System.Windows.Controls.ComboBoxItem: Фьючерс":
-                    iInstrumentType = 2;
+                    iInstrumentType = "Фьючерс";
                     break;
             }
             trade.InstrumentType = iInstrumentType;
@@ -312,11 +312,11 @@ namespace WpfApp1
 
             switch (SelectedTradeType) {
                 case "System.Windows.Controls.ComboBoxItem: Long":  //да, костыль! времени нет
-                    iSelectedTradeType = 0;
+                    iSelectedTradeType = "Long";
                     countAll();
                     break;
                 case "System.Windows.Controls.ComboBoxItem: Short": //да, костыль! времени нет
-                    iSelectedTradeType = 1;
+                    iSelectedTradeType ="Short";
                     countAll();
                     break;
             }
