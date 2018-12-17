@@ -257,7 +257,7 @@ namespace WpfApp1
                     connection.Open();
                     cmdCreateTable.ExecuteNonQuery();
                     connection.Close();
-                    MessageBox.Show("База данных "+ win.Schema +" и таблица "+ win.Table + " успешно созданы.", "Успех[");
+                    MessageBox.Show("База данных "+ win.Schema +" и таблица "+ win.Table + " успешно созданы.", "Успех!");
                     dBconnection.setParams(win.Schema, win.Table); //обновление подключения
                 }
             catch (Exception exc)
@@ -277,8 +277,8 @@ namespace WpfApp1
                 string command = "SELECT `"+dBconnection.DB+"`.`"+ dBconnection.Table+ "`.`id` AS `id`, " +
                     "`tradesassistant`.`trades`.`instrument_name` AS `Имя инструмента`, " +
                     "`tradesassistant`.`instrument_type`.`instrumenttype` AS `Класс инструмента`, " +
-                    "`tradesassistant`.`trades`.`instrument_ticker` AS `Тикер инструмента`," +
-                    " `tradesassistant`.`trade_types`.`tradetype` AS `Тип сделки`, " +
+                    "`tradesassistant`.`trades`.`instrument_ticker` AS `Тикер инструмента`, " +
+                    "`tradesassistant`.`trade_types`.`tradetype` AS `Тип сделки`, " +
                     "`tradesassistant`.`trades`.`opening_price` AS `Цена открытия`, " +
                     "`tradesassistant`.`trades`.`trade_volume` AS `Объем позиции`, " +
                     "`tradesassistant`.`trades`.`trade_sum` AS `Сумма позиции`,	" +

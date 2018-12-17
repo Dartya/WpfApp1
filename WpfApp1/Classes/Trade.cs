@@ -15,8 +15,8 @@ namespace WpfApp1.Classes
         public enum TradeType { Long = 1 , Short }*/
 
         //свойства БД
-        private string Schema;
-        private string Table;
+        public string Schema { get; set; }
+        public string Table { get; set; }
 
         //свойства трейда
         public int TradeId { get; set; }
