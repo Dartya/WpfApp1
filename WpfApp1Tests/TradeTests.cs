@@ -122,5 +122,74 @@ namespace WpfApp1Tests
             //вызываем Assert.AreEqual(предполагаемый результат, результат работы тестируемого метода)
             Assert.AreEqual(testQuery, query);
         }
+
+        [TestMethod]
+        public void EditQuery1() //юнит тест - это этот самый метод, помеченный атрибутом [TestMethod]
+        {
+            //arrange - настройка
+            //вводим здесь параметры для тестируемого метода
+            //и предполагаемый результат работы
+            string testQuery;   //строка, которая будет принимать результат тестируемого метода
+
+            string schema = "tradeAssist";
+            string table = "trades";
+            int TradeId = 1;
+            string InstrumentName = "Microsoft";
+            string InstrumentType = "Акция";
+            string Ticker = "MSFT";
+            string TradeType = "Short";
+            decimal OpeningPrice = 100;
+            int TradeSize = 10;
+            decimal TradeSum = 1000;
+
+            //дополнительные параметры сделки
+            bool TradeClosed = true;
+            decimal ClosingPrice = 110;
+            decimal Comission = 2;
+            decimal Taxes = 13;
+            decimal Profit = 85;
+            
+            //эталонная строка сравнения
+            string query = "UPDATE `tradeAssist`.`trades` SET " +
+                "`instrument_name`='Microsoft', " +
+                "`instrument_class`='1', " +
+                "`instrument_ticker`='MSFT', " +
+                "`trade_type`='1', " +
+                "`opening_price`='100', " +
+                "`trade_volume`='10', " +
+                "`trade_sum`='1000', " +
+                "`trade_closed`='1', " +
+                "`closing_price`='110', " +
+                "`comissions`='2', " +
+                "`taxes`='13', " +
+                "`profit`='85' " +
+                "WHERE `id`='1';";
+
+            //act - выполнить действия
+            //здесь создаем экземпляр тестируемого класса и вызываем метод с параметрами
+            Trade trade = new Trade();  //создаем объект типа Trade
+            trade.setDataBaseParams(schema, table); //задаем параметры БД
+
+            //задаем значения свойств созданного объекта
+            trade.TradeId = TradeId;
+            trade.InstrumentName = InstrumentName;
+            trade.InstrumentType = InstrumentType;
+            trade.Ticker = Ticker;
+            trade.TradeType = TradeType;
+            trade.OpeningPrice = OpeningPrice;
+            trade.TradeSize = TradeSize;
+            trade.TradeSum = TradeSum;
+            trade.TradeClosed = TradeClosed;
+            trade.ClosingPrice = ClosingPrice;
+            trade.Comission = Comission;
+            trade.Taxes = Taxes;
+            trade.Profit = Profit;
+
+            testQuery = trade.EditQuery(); //выполняем тестируемый метод
+
+            //assert
+            //вызываем Assert.AreEqual(предполагаемый результат, результат работы тестируемого метода)
+            Assert.AreEqual(testQuery, query);
+        }
     }
 }
