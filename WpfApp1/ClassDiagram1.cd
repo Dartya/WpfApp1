@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WpfApp1.App">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WpfApp1.CalculatorWindow" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAgAgUAAl4CEQCCAgAoAIARBgARQAADgDAAGAEM=</HashCode>
+      <FileName>CalculatorWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WpfApp1.DBConnectionSettings" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAgAIAAAAAAAAEA=</HashCode>
+      <FileName>DBConnectionSettings.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WpfApp1.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAIAABAQEAABAAAAABAgAAARAQAAAIAAIAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WpfApp1.NewDBWindow" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAADAAAAAAAAAABAQAQBAEAAAAAAAAAAAgAQAAAEA=</HashCode>
+      <FileName>NewDBWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WpfApp1.RiskProfile" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="4" Width="3" />
+    <TypeIdentifier>
+      <HashCode>CAAgAAAAACCAAAAAKIAAAAAIACAAAAAQICAACAAgIEA=</HashCode>
+      <FileName>RiskProfile.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WpfApp1.RowAddEditWindow" BaseTypeListCollapsed="true">
+    <Position X="13" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>BQAASEYAAACAEACCQEAAAAMDBgAAdCgwQgQAAwAAAGA=</HashCode>
+      <FileName>RowAddEditWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WpfApp1.Classes.DBconnection">
+    <Position X="5.25" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAgAAAAAQAAAAAAAAAgACAAAAgAAEBA=</HashCode>
+      <FileName>Classes\DBconnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WpfApp1.Classes.RiskProfile">
+    <Position X="2.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAoAAAAAAAEAAAAAQAEAQgAAAAACEQAAAAADAAAAAA=</HashCode>
+      <FileName>Classes\RiskProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WpfApp1.Classes.Trade">
+    <Position X="8.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IYAAAAIAAACAAAADAgAAWAAGAAAAACAAAEAQBgAEIAA=</HashCode>
+      <FileName>Classes\Trade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WpfApp1.Properties.Resources">
+    <Position X="0.5" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="System.Windows.Markup.IComponentConnector">
+    <Position X="16" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
